@@ -1,0 +1,40 @@
+﻿@using BusinessModel
+@{
+    ViewBag.Title = "StudentFacultative";
+}
+@model Facultative
+
+<br />
+
+<div class="label-info facultative-label">
+    <h2 class="text-center">@Model.Name</h2>
+    <p>Тема: @Model.Theme</p>
+    <p>Преподаватель: @Model.Lecturer.FullName</p>
+    <p>Описание: @Model.Description</p>
+    <p>Статус: @Model.Status</p>
+    <p>Количество зарегистрированных: @Model.Audience.Count</p>
+</div>
+<br />
+<br />
+
+@if (Model.Log != null)
+{
+    <h2 class="text-center">Журнал оценок</h2>
+    <table class="table table-bordered">
+        <tr class="label-default">
+            <th>Name</th>
+            <th>Mark</th>
+            <th>Date</th>
+        </tr>
+        @foreach (var item in Model.Log.Reports)
+        {
+            string str = item.Mark < 60? "label-danger"
+                : (item.Mark < 75)? "label-warning" : (item.Mark < 90) ? "label-primary" : "label-success";
+           <tr class='@str'>
+                <td>@item.Listener.FullName</td>
+                <td>@item.Mark</td>
+                <td>@item.Date.ToShortDateString()</td>
+            </tr>
+        }
+    </table>
+}

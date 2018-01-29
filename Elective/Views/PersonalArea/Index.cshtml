@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Персональные данные";
+}
+
+@using BusinessModel
+
+@model Account
+
+<br />
+<div class="facultative-color facultative-label">
+
+    <h2 class="text-center">@Model.FullName</h2>
+    <br />
+    <div class="media">
+        <div class="media-left media-top" style="float:left; width:30%">
+            <img src="~/Content/img_avatar1.png" class="media-object" style="width : 80%">
+        </div>
+        <div class="media-body" style=" position:absolute;">
+            <p>Имя: @Model.FirstName</p>
+            <p>Фамилия: @Model.SecondName</p>
+            <p>Возраст: @Model.Age</p>
+            <p>День рождения: @Model.BirthDate.ToShortDateString()</p>
+        </div>
+    </div>
+    <br />
+
+    <p class=" text-right">
+        @Html.ActionLink("Редактировать", "Edit", "PersonalArea", null, new { @class = "btn btn-success" })
+    </p>
+</div>

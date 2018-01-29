@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Layout/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</head>
+
+<body>
+    <header class="page-header">
+        <h3>Elective</h3>
+        <p class="Account">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Войти в систему", "Login", "Account")
+            }
+            else
+            {
+                @User.Identity.Name;<strong> </strong>
+                @Html.ActionLink("Выйти", "LogOff", "Account")
+            }
+        </p>
+    </header>
+
+    <div class="main inline">
+        <div class="content">
+            <nav class="menu">
+                <li>@Html.ActionLink("Главная", "Index", "Home", new { Area = "" }, null)</li>
+                <li>
+                    @Html.ActionLink("Админ", "Index", "AccountManager", new { Area = "Admin" }, null)
+                    <ul>
+                        <li>@Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null)</li>
+                        <li>@Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null)</li>
+                    </ul>
+                </li>
+                <li>
+                    @Html.ActionLink("Студент", "Index", "StudentManager", new { Area = "Student" }, null)
+                    <ul>
+                        <li>@Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null)</li>
+                        <li>@Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)</li>
+                    </ul>
+                </li>
+                <li>
+                    @Html.ActionLink("Учитель", "Index", "TeacherFacultative", new { Area = "Teacher" }, null)
+                    <ul>
+                        <li>@Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null)</li>
+                        <li>@Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)</li>
+                    </ul>
+                </li>
+            </nav>
+            @RenderBody()
+        </div>
+    </div>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Выполнить вход";
+}
+
+<div class="col-md-7 col-md-offset-2">
+    <section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            <h2 class="text-center">@ViewBag.Title.</h2>
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary(true, "")
+            <div class="input-group-sm">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                    @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = "Login" })
+                </span>
+                <p>@Html.ValidationMessageFor(m => m.Login, "")</p>
+            </div>
+                <div class="input-group-sm">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-lock"></i>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                    </span>
+                    <p>@Html.ValidationMessageFor(m => m.Password, "")</p>
+                </div>
+                <p>
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                    <input type="submit" value="Выполнить вход" class="btn btn-success text-right" />
+                </p>
+                <p>@Html.ActionLink("Регистрация нового пользователя", "Register")</p>
+        }
+    </section>
+</div>

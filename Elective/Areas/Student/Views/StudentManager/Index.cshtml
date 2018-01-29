@@ -1,0 +1,43 @@
+﻿@using BusinessModel
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/Facultative/js")
+@model IQueryable<Facultative>
+<h2 class="text-center">Все факультативы</h2>
+<br />
+
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+
+<table class="table tab-content">
+    <thead class="btn-danger">
+        <tr>
+            <th onclick="on(0)">Name</th>
+            <th onclick="on(1)">Theme</th>
+            <th onclick="on(2)">Status</th>
+            <th onclick="on(3)">Count</th>
+            <th onclick="on(4)">Lecturer</th>
+            <th onclick="on(5)">Duration</th>
+        </tr>
+    </thead>
+    <tbody id="myTable" class="btn-success">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td >@item.Name</td>
+                <td  class="searchTheme">@item.Theme</td>
+                <td >@item.Status</td>
+                <td >@item.Audience.Count</td>
+                <td class="searchName">@item.Lecturer.FullName</td>
+                <td  >@item.Duration</td>
+                <td>
+                    @if (item.Status == FacultativeStatus.Registration)
+                    {
+                        <p >@Html.ActionLink("Register", "RegisterFacultative", new { id = item.Id })</p>
+                    }
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

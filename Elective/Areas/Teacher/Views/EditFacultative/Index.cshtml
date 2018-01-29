@@ -1,0 +1,46 @@
+﻿@using BusinessModel
+@{
+    ViewBag.Title = "EditFacultative";
+}
+@{Html.EnableClientValidation(false);}
+@model FacultativeViewModel
+
+
+
+<div class="col-md-7 col-md-offset-2">
+    <h2 class=" text-center">Редактировать факультатив</h2>
+
+    @using (Html.BeginForm("Index", "EditFacultative", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <p> @Html.LabelFor(m => m.Name)</p>
+        <p> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Name" })</p>
+        <p>@Html.ValidationMessageFor(m => m.Name, "")</p>
+
+        <p>@Html.LabelFor(m => m.Theme)</p>
+        <p>@Html.TextBoxFor(m => m.Theme, new { @class = "form-control", @placeholder = "Theme" })</p>
+        <p>@Html.ValidationMessageFor(m => m.Theme, "")</p>
+
+        <p>@Html.LabelFor(m => m.Duration)</p>
+        <p>@Html.EditorFor(m => m.Duration)</p>
+        <p>@Html.ValidationMessageFor(m => m.Duration, "")</p>
+
+        <p>@Html.LabelFor(m => m.Description)</p>
+        <p>@Html.TextBoxFor(m => m.Description, new { @class = "form-control", @placeholder = "Description" })</p>
+        <p>@Html.ValidationMessageFor(m => m.Description, "")</p>
+
+        <p>@Html.LabelFor(m => m.StartFacultative)</p>
+        <p>@Html.TextBoxFor(m => m.StartFacultative, new { @Value = DateTime.Now.ToString("yyyy/MM/dd") })</p>
+        <p>@Html.ValidationMessageFor(m => m.StartFacultative, "")</p>
+
+        <p>@Html.LabelFor(m => m.Status)</p>
+        <p>@Html.RadioButtonFor(m => m.Status, FacultativeStatus.Started) @FacultativeStatus.Started.ToString()</p>
+        <p>@Html.RadioButtonFor(m => m.Status, FacultativeStatus.Registration) @FacultativeStatus.Registration.ToString()</p>
+        <p>@Html.RadioButtonFor(m => m.Status, FacultativeStatus.NotAvailable) @FacultativeStatus.NotAvailable.ToString()</p>
+        <p>@Html.RadioButtonFor(m => m.Status, FacultativeStatus.Finished) @FacultativeStatus.Finished.ToString()</p>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary" name="button" value="Change">Change data</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Delete">Delete</button>
+        </div>
+    }
+</div>

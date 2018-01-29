@@ -1,0 +1,30 @@
+﻿@{Html.EnableClientValidation(false);}
+@{
+    ViewBag.Title = "Редактировать данные";
+}
+@model PersonViewModel
+
+<div class="col-md-7 col-md-offset-2">
+    <h2 class=" text-center">Редактировать данные</h2>
+
+    @using (Html.BeginForm("Edit", "PersonalArea", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <p> @Html.LabelFor(m => m.FirstName)</p>
+        <p> @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "FirstName" })</p>
+        <p>@Html.ValidationMessageFor(m => m.FirstName, "")</p>
+
+        <p>@Html.LabelFor(m => m.SecondName)</p>
+        <p>@Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = "SecondName" })</p>
+        <p>@Html.ValidationMessageFor(m => m.SecondName, "")</p>
+
+        <p>@Html.LabelFor(m => m.Age)</p>
+        <p>@Html.EditorFor(m => m.Age)</p>
+        <p>@Html.ValidationMessageFor(m => m.Age, "")</p>
+
+        <p>@Html.LabelFor(m => m.BirthDate)</p>
+        <p>@Html.TextBoxFor(m => m.BirthDate, new { @Value = DateTime.Now.ToString("yyyy/MM/dd") })</p>
+        <p>@Html.ValidationMessageFor(m => m.BirthDate, "")</p>
+
+        <button type="submit" class="btn btn-success" name="button" value="Change">Change data</button>
+    }
+</div>

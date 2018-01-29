@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = ViewBag.Type;
+}
+<br />
+<br />
+@{string style;}
+
+@if (ViewBag.Type == "Error")
+{ style = "label-danger facultative-label"; }
+else { style = "label-success facultative-label"; }
+
+<div class='@style'>
+<h2 class="text-center">@ViewBag.Type</h2>
+<hr />
+<h3>@ViewBag.Message</h3>
+</div>

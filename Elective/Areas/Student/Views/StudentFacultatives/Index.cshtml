@@ -1,0 +1,44 @@
+﻿@using BusinessModel
+@{
+    ViewBag.Title = "StudentFacultatives";
+}
+@model IEnumerable<Facultative>
+<h2 class="text-center">Мои факультативы</h2>
+<br />
+
+@helper Facultatives(Facultative facultative, string style)
+{
+    <div class='@style' >
+            <h3 class="text-center">@facultative.Name</h3>
+            <p>Тема: @facultative.Theme</p>
+            <p>Статус: @facultative.Status</p>
+            <p>Количество зарегистрированных: @facultative.Audience.Count</p>
+            <p class="text-right">@Html.ActionLink("Посмотреть", "Index", "StudentFacultative", new { id = facultative.Id }, new { @class = "btn btn-warning btn-lg text-danger" })</p>
+    </div>
+}
+<div class="facultative-label label-default">
+    <br />
+    @foreach (var item in Model)
+    {
+        <div class="facultative-label">
+            @if (item.Status == FacultativeStatus.Registration)
+            {
+                @Facultatives(item, "label-success facultative-label text-dark");
+            }
+            @if (item.Status == FacultativeStatus.Started)
+            {
+                @Facultatives(item, "label-warning facultative-label text-dark");
+            }
+            @if (item.Status == FacultativeStatus.Finished)
+            {
+                @Facultatives(item, "label-info facultative-label");
+            }
+            @if (item.Status == FacultativeStatus.NotAvailable)
+            {
+                @Facultatives(item, "label-danger facultative-label text-dark");
+            }
+        </div>
+        <br />
+        <br />
+    }
+</div>

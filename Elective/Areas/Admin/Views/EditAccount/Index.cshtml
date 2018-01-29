@@ -1,0 +1,48 @@
+﻿@{Html.EnableClientValidation(false);}
+@{
+    ViewBag.Title = "EditAccount";
+}
+
+@model ChangeAccountDataViewModel
+<div class="col-md-7 col-md-offset-2">
+    @using (Html.BeginForm("Index", "EditAccount", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h2 class="text-center">EditAccount</h2>
+        <h4 class="text-center">Редактировать учетную запись.</h4>
+        <hr />
+        <p>@Html.LabelFor(m => m.Email)</p>
+        <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })</p>
+
+        <p>@Html.LabelFor(m => m.Login)</p>
+        <p>@Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = "Login" })</p>
+
+        <p>@Html.LabelFor(m => m.FirstName)</p>
+        <p>@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "FirstName" })</p>
+
+        <p>@Html.LabelFor(m => m.SecondName)</p>
+        <p>@Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = "SecondName" })</p>
+
+        <p>@Html.LabelFor(m => m.Age)</p>
+        <p>@Html.EditorFor(m => m.Age)</p>
+
+        <p>@Html.LabelFor(m => m.BirthDate)</p>
+        <p>@Html.TextBoxFor(m => m.BirthDate, new { @Value = DateTime.Now.ToString("yyyy/MM/dd") })</p>
+
+        <p> @Html.LabelFor(m => m.OldPassword)</p>
+        <p> @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control", @placeholder = "OldPassword" })</p>
+
+        <p> @Html.LabelFor(m => m.NewPassword)</p>
+        <p> @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @placeholder = "NewPassword" })</p>
+
+        <p>@Html.LabelFor(m => m.ConfirmPassword)</p>
+        <p>@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "ConfirmPassword" })</p>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary" name="button" value="Change data">Change data</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Delete">Delete</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Ban">Ban</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Restore">Restore</button>
+        </div>
+    }
+</div>

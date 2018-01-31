@@ -5,26 +5,29 @@
 @using BusinessModel;
 
 @model Teacher
-<h2 class="text-center">Все факультативы</h2>
+<div class="col-lg-12 person-color">
+    <h2 class="text-center">Все факультативы</h2>
+    <br />
+    <br />
 
-
-@foreach (var item in Model.MyFacultatives)
-{
-    <div class="facultative-label facultative-color">
-        <p>Название: @item.Name</p>
-        <p>Тема: @item.Theme</p>
-        <p>Состояние: @item.Status</p>
-        <p>Преподаватель: @item.Lecturer.FullName</p>
-        <p>Количество зарегистрированных: @item.Audience.Count</p>
-        <div class="btn-group">
-            @Html.ActionLink("Редактировать", "Index", "EditFacultative", new { id = item.Id }, new { @class = "text-warning btn btn-primary" })
-            @if (item.Status == FacultativeStatus.Finished)
-            {@Html.ActionLink("Посмотреть журнал", "WhatchLog", new { id = item.Id }, new { @class = "text-warning btn btn-primary" })}
-            else
-            {@Html.ActionLink("Создать журнал", "Index", "AddLog", new { id = item.Id }, new { @class = "text-warning btn btn-primary" }) }
+    @foreach (var item in Model.MyFacultatives)
+    {
+        <div class="facultative-label teacher-color">
+            <h2 class=" text-center"> @item.Name</h2>
+            <p>Тема: @item.Theme</p>
+            <p>Состояние: @item.Status</p>
+            <p>Преподаватель: @item.Lecturer.FullName</p>
+            <p>Количество зарегистрированных: @item.Audience.Count</p>
+            <div class="btn-group">
+                @Html.ActionLink("Редактировать", "Index", "EditFacultative", new { id = item.Id }, new { @class = "text-warning btn btn-primary" })
+                @if (item.Status == FacultativeStatus.Finished)
+                {@Html.ActionLink("Посмотреть журнал", "WhatchLog", new { id = item.Id }, new { @class = "text-warning btn btn-primary" })}
+                else
+                {@Html.ActionLink("Создать журнал", "Index", "AddLog", new { id = item.Id }, new { @class = "text-warning btn btn-primary" }) }
+            </div>
         </div>
-    </div>
-    <br />
-    <br />
-}
+        <br />
+        <br />
+    }
+</div>
 

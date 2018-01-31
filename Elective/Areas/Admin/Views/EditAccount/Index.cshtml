@@ -1,14 +1,13 @@
 ﻿@{Html.EnableClientValidation(false);}
 @{
-    ViewBag.Title = "EditAccount";
+    ViewBag.Title = "Edit Account";
 }
 
 @model ChangeAccountDataViewModel
-<div class="col-md-7 col-md-offset-2">
+<div class="col-md-7 col-md-offset-2 fon-color">
     @using (Html.BeginForm("Index", "EditAccount", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h2 class="text-center">EditAccount</h2>
         <h4 class="text-center">Редактировать учетную запись.</h4>
         <hr />
         <p>@Html.LabelFor(m => m.Email)</p>
@@ -44,5 +43,8 @@
             <button type="submit" class="btn btn-primary" name="button" value="Ban">Ban</button>
             <button type="submit" class="btn btn-primary" name="button" value="Restore">Restore</button>
         </div>
+
+        <br />
+        <br />
     }
 </div>

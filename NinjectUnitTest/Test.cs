@@ -5,19 +5,17 @@ using Ninject;
 using System.Web.Mvc;
 using Ninject.Web.Mvc;
 using BusinessModel;
-using Ninject.Web.Common;
 using Moq;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
-using System.Data.Entity.Infrastructure;
 using System.Web.WebPages;
 using System.Collections.Specialized;
 using System.Globalization;
 
-namespace NinjectUnitTest
+namespace UnitTest
 {
     [TestClass]
     public class Test
@@ -270,6 +268,7 @@ namespace NinjectUnitTest
 
             _reports.Add(new Report(_students[0], 60));
         }
+
         private void RestoreDate()
         {
             _users.Clear();
@@ -280,6 +279,22 @@ namespace NinjectUnitTest
             _reports.Clear();
             _reportBooks.Clear();
             InitData();
+        }
+
+        private void SetModelState(Controller controller, object ob)
+        {
+            var modelBinder = new ModelBindingContext()
+            {
+                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(
+                     () => ob, ob.GetType()),
+                ValueProvider = new NameValueCollectionValueProvider(
+                       new NameValueCollection(), CultureInfo.InvariantCulture)
+            };
+            var binder = new DefaultModelBinder().BindModel(
+                             new ControllerContext(), modelBinder);
+
+            controller.ModelState.Clear();
+            controller.ModelState.Merge(modelBinder.ModelState);
         }
 
         private Mock<ControllerContext> ControllerContext(string role
@@ -588,18 +603,7 @@ namespace NinjectUnitTest
                 StartFacultative = DateTime.Now
             };
 
-            var modelBinder = new ModelBindingContext()
-            {
-                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(
-                      () => facultativeVM, facultativeVM.GetType()),
-                ValueProvider = new NameValueCollectionValueProvider(
-                        new NameValueCollection(), CultureInfo.InvariantCulture)
-            };
-
-            var binder = new DefaultModelBinder().BindModel(
-                             new ControllerContext(), modelBinder);
-            editFacultativeController.ModelState.Clear();
-            editFacultativeController.ModelState.Merge(modelBinder.ModelState);
+            SetModelState(editFacultativeController, facultativeVM);
 
             _teachers.Where(s => s.Identity.UserName == "IvanNagibator007").FirstOrDefault().MyFacultatives.Add(_facultatives[0]);
 
@@ -621,20 +625,7 @@ namespace NinjectUnitTest
                 Status = FacultativeStatus.Finished
             };
 
-            modelBinder = new ModelBindingContext()
-            {
-                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(
-                      () => facultativeVM, facultativeVM.GetType()),
-                ValueProvider = new NameValueCollectionValueProvider(
-                        new NameValueCollection(), CultureInfo.InvariantCulture)
-            };
-            binder = new DefaultModelBinder().BindModel(
-                             new ControllerContext(), modelBinder);
-            editFacultativeController.ModelState.Clear();
-            editFacultativeController.ModelState.Merge(modelBinder.ModelState);
-
-            editFacultativeController.ModelState.Clear();
-            editFacultativeController.ModelState.Merge(modelBinder.ModelState);
+            SetModelState(editFacultativeController, facultativeVM);
 
             result = editFacultativeController.Index(facultativeVM, facultative.Id, "Change");
 
@@ -665,18 +656,7 @@ namespace NinjectUnitTest
                 StartFacultative = DateTime.Now
             };
 
-            var modelBinder = new ModelBindingContext()
-            {
-                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(
-                      () => facultativeVM, facultativeVM.GetType()),
-                ValueProvider = new NameValueCollectionValueProvider(
-                        new NameValueCollection(), CultureInfo.InvariantCulture)
-            };
-            var binder = new DefaultModelBinder().BindModel(
-                             new ControllerContext(), modelBinder);
-
-            addFacultativeController.ModelState.Clear();
-            addFacultativeController.ModelState.Merge(modelBinder.ModelState);
+            SetModelState(addFacultativeController, facultativeVM);
 
             RedirectToRouteResult result = addFacultativeController.Index(facultativeVM) as RedirectToRouteResult;
 
@@ -698,18 +678,7 @@ namespace NinjectUnitTest
                 StartFacultative = DateTime.Now
             };
 
-            modelBinder = new ModelBindingContext()
-            {
-                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(
-                      () => facultativeVM, facultativeVM.GetType()),
-                ValueProvider = new NameValueCollectionValueProvider(
-                        new NameValueCollection(), CultureInfo.InvariantCulture)
-            };
-            binder = new DefaultModelBinder().BindModel(
-                             new ControllerContext(), modelBinder);
-
-            addFacultativeController.ModelState.Clear();
-            addFacultativeController.ModelState.Merge(modelBinder.ModelState);
+            SetModelState(addFacultativeController, facultativeVM);
 
             result = addFacultativeController.Index(facultativeVM) as RedirectToRouteResult;
 
@@ -747,18 +716,7 @@ namespace NinjectUnitTest
 
             };
 
-            var modelBinder = new ModelBindingContext()
-            {
-                ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(
-                     () => reportBookViewModel, reportBookViewModel.GetType()),
-                ValueProvider = new NameValueCollectionValueProvider(
-                       new NameValueCollection(), CultureInfo.InvariantCulture)
-            };
-            var binder = new DefaultModelBinder().BindModel(
-                             new ControllerContext(), modelBinder);
-
-            addLogController.ModelState.Clear();
-            addLogController.ModelState.Merge(modelBinder.ModelState);
+            SetModelState(addLogController, reportBookViewModel);
 
             RedirectToRouteResult result = addLogController.Index(facultative.Id, reportBookViewModel) as RedirectToRouteResult;
 
@@ -774,6 +732,8 @@ namespace NinjectUnitTest
         [TestMethod]
         public void TestStudentFacultativeController()
         {
+            RestoreDate();
+
             StudentFacultativeController controller = new StudentFacultativeController(
                   DependencyResolver.Current.GetService<IStudentService>());
 
@@ -787,6 +747,8 @@ namespace NinjectUnitTest
         [TestMethod]
         public void TestStudentFacultativesController()
         {
+            RestoreDate();
+
             StudentFacultativesController controller = new StudentFacultativesController(
                   DependencyResolver.Current.GetService<IAccountService>(),
                   DependencyResolver.Current.GetService<IStudentService>());
@@ -803,6 +765,8 @@ namespace NinjectUnitTest
         [TestMethod]
         public void TestStudentManagerController()
         {
+            RestoreDate();
+
             StudentManagerController controller = new StudentManagerController(
                   DependencyResolver.Current.GetService<IAccountService>(),
                   DependencyResolver.Current.GetService<IStudentService>());
@@ -820,6 +784,54 @@ namespace NinjectUnitTest
             result = controller.RegisterFacultative(_facultatives[0].Id);
 
             Assert.AreEqual(_students[0].RegistrFacultatives.Count, 1);
+        }
+
+        [TestMethod]
+        public void TestPersonalAreaController()
+        {
+            RestoreDate();
+
+            PersonalAreaController controller = new PersonalAreaController(DependencyResolver.Current.GetService<IAccountService>());
+
+            controller.ControllerContext = ControllerContext("Student", "POST", "lol").Object;
+
+            var result = controller.Index();
+
+            Account account = (Account)(((ViewResult)result).Model);
+
+            Assert.AreEqual(account.FirstName, "Stud33");
+            Assert.AreEqual(account.SecondName, "Stude32");
+            Assert.AreEqual(account.Age, 60);
+
+            PersonViewModel model = new PersonViewModel
+            {
+                FirstName = "4",
+                SecondName = "1",
+                Age = -5
+            };
+
+            SetModelState(controller, model);
+
+            result = controller.Edit(model);
+
+            Assert.AreEqual(account.FirstName, "Stud33");
+            Assert.AreEqual(account.SecondName, "Stude32");
+            Assert.AreEqual(account.Age, 60);
+
+            model = new PersonViewModel
+            {
+                FirstName = "Stud333",
+                SecondName = "Stud323",
+                Age = 74
+            };
+
+            SetModelState(controller, model);
+
+            result = controller.Edit(model);
+
+            Assert.AreEqual(account.FirstName, "Stud333");
+            Assert.AreEqual(account.SecondName, "Stud323");
+            Assert.AreEqual(account.Age, 74);
         }
     }
 }

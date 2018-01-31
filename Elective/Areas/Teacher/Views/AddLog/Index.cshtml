@@ -3,43 +3,49 @@
 }
 @model ReportBookViewModel
 @using BusinessModel
-<br />
-<br />
-<div class="facultative-color facultative-label">
-    <p>Название факультатива: @Model.Elective.Name</p>
-    <p>Тема: @Model.Elective.Theme</p>
-    <p>Описание: @Model.Elective.Description</p>
-    <p>Статус: @Model.Elective.Status</p>
-    <p>Количество зарегистрированных: @Model.Elective.Audience.Count</p>
-</div>
-<br />
-<br />
 
-<h2 class="text-center">Журнал оценок</h2>
+<div class="col-lg-12 person-color">
+    <br />
+    <br />
+    <div class="teacher-color facultative-label">
+        <h2 class=" text-center"> @Model.Elective.Name</h2>
+        <p>Тема: @Model.Elective.Theme</p>
+        <p>Описание: @Model.Elective.Description</p>
+        <p>Статус: @Model.Elective.Status</p>
+        <p>Количество зарегистрированных: @Model.Elective.Audience.Count</p>
+    </div>
+    <br />
+    <br />
 
-<br />
+    <h2 class="text-center">Журнал оценок</h2>
 
-@if (Model.Elective.Status != FacultativeStatus.Finished)
-{
+    <br />
 
-    using (Html.BeginForm("Index", "AddLog", new { id = Model.Elective.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
+    @if (Model.Elective.Status != FacultativeStatus.Finished)
     {
-        <table class="table">
-            <tr class="label-danger">
-                <th>Name</th>
-                <th>Mark</th>
-            </tr>
-            @foreach (var item in Model.Elective.Audience)
-            {
-                Model.Reports.Add(new ReportViewModel() { Mark = 0, Id = item.Id});
-                <tr class="label-success">
-                    <td>@item.FullName</td>
-                    <td>@Html.EditorFor(m => Model.Reports[Model.Reports.Count-1].Mark)</td>
-                   <p hidden> @Html.EditorFor(m => Model.Reports[Model.Reports.Count - 1].Id, new { @Value = Model.Reports[Model.Reports.Count - 1].Id = item.Id, @disabled=true })</p>
-                </tr>
-            }
-        </table>
 
-        <input type="submit" value="Добавить" class="btn btn-success text-right" />
+        using (Html.BeginForm("Index", "AddLog", new { id = Model.Elective.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <table class="table">
+                <tr class="label-danger">
+                    <th>Name</th>
+                    <th>Mark</th>
+                </tr>
+                @foreach (var item in Model.Elective.Audience)
+                {
+                    Model.Reports.Add(new ReportViewModel() { Mark = 0, Id = item.Id });
+                    <tr class="label-success">
+                        <td>@item.FullName</td>
+                        <td>@Html.EditorFor(m => Model.Reports[Model.Reports.Count - 1].Mark)</td>
+                        <p hidden> @Html.EditorFor(m => Model.Reports[Model.Reports.Count - 1].Id, new { @Value = Model.Reports[Model.Reports.Count - 1].Id = item.Id, @disabled = true })</p>
+                    </tr>
+                }
+            </table>
+
+            <input type="submit" value="Добавить" class="btn btn-success text-right" />
+
+            <br />
+            <br />
+        }
     }
-}
+</div>

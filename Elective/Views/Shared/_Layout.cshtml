@@ -13,48 +13,91 @@
 
 <body>
     <header class="page-header">
-        <h3>Elective</h3>
-        <p class="Account">
-            @if (!User.Identity.IsAuthenticated)
-            {
-                @Html.ActionLink("Войти в систему", "Login", "Account")
-            }
-            else
-            {
-                @User.Identity.Name;<strong> </strong>
-                @Html.ActionLink("Выйти", "LogOff", "Account")
-            }
-        </p>
+        <img class="brand" src="~/Content/Brand.png"> 
     </header>
 
-    <div class="main inline">
+
+    <br /> <br /> <br /> <br />
+
+    <div class="main inline">    
         <div class="content">
-            <nav class="menu">
-                <li>@Html.ActionLink("Главная", "Index", "Home", new { Area = "" }, null)</li>
-                <li>
-                    @Html.ActionLink("Админ", "Index", "AccountManager", new { Area = "Admin" }, null)
-                    <ul>
-                        <li>@Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null)</li>
-                        <li>@Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null)</li>
-                    </ul>
-                </li>
-                <li>
-                    @Html.ActionLink("Студент", "Index", "StudentManager", new { Area = "Student" }, null)
-                    <ul>
-                        <li>@Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null)</li>
-                        <li>@Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)</li>
-                    </ul>
-                </li>
-                <li>
-                    @Html.ActionLink("Учитель", "Index", "TeacherFacultative", new { Area = "Teacher" }, null)
-                    <ul>
-                        <li>@Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null)</li>
-                        <li>@Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)</li>
-                    </ul>
-                </li>
+            <p class="levp"><img class="lev" src="~/Content/Lev.png"></p>
+            <nav class="menu navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Elective ♥</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Главная", "Index", "Home", new { Area = "" }, null)</li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Админ <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null)</li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null)</li>
+                                    </ul>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Student"))
+                            {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Студент <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null)</li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)</li>
+                                    </ul>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Teacher"))
+                            {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle text-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Учитель <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null)</li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)</li>
+                                    </ul>
+                                </li>
+                            }
+                            <li>@Html.ActionLink("Contact", "Index", "Home", new { Area = "" }, null)</li>
+                            <li>@Html.ActionLink("Contact", "Index", "Home", new { Area = "" }, null)</li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink(" Login", "Login", "Account", new { Area = "" }, new { @class = "glyphicon glyphicon-log-in" })</li>
+                                <li>@Html.ActionLink(" Sign UP", "Register", "Account", new { Area = "" }, new { @class = "glyphicon glyphicon-user" })</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink(@User.Identity.Name.Insert(0, " "), "Index", "PersonalArea", new { Area = "" }, new { @class = "glyphicon glyphicon-user" })</li>
+                                <li>@Html.ActionLink(" Выйти", "LogOff", "Account", new { Area = "" }, new { @class = "glyphicon glyphicon-log-out" })</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
             </nav>
             @RenderBody()
         </div>
     </div>
-    </body>
+
+    <footer>
+            <hr />
+           <p class="text-right">&copy; Parviz Musaiev</p>
+    </footer>
+</body>
 </html>

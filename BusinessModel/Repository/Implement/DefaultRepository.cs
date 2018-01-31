@@ -11,7 +11,7 @@ namespace BusinessModel
     /// abstract repository, basic set for the repository
     /// and some implementation of methods
     /// </summary>
-    public abstract class DefaultRepository<T> :IDisposable, IDefaultRepository<T> where T : class
+    public abstract class DefaultRepository<T> : IDefaultRepository<T> where T : class
     {
         protected ElectiveContext _electiveContext;
 
@@ -60,11 +60,6 @@ namespace BusinessModel
         {
             _electiveContext.Set<T>().Add(data);
             Save();
-        }
-
-        public void Dispose()
-        {
-            
         }
 
         public void ChangeState<U>(U data) where U : class

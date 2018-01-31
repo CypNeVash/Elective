@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Elective.Controllers
+namespace Elective
 {
     /// <summary>
     /// Controller for working 
@@ -61,6 +61,8 @@ namespace Elective.Controllers
                 }
 
                 _accountService.ChangeStateEntity(account);
+
+                return RedirectToAction("Index");
             }
             return View(personVM);
         }

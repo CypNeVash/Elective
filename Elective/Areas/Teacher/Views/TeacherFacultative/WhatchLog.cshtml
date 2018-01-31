@@ -5,39 +5,41 @@
 
 @model Facultative
 
-<br />
-<br />
-<div class="facultative-color facultative-label">
-    <h2 class="text-center"> @Model.Name</h2>
-    <p>Тема: @Model.Theme</p>
-    <p>Описание: @Model.Description</p>
-    <p>Статус: @Model.Status</p>
-    <p>Количество зарегистрированных: @Model.Audience.Count</p>
-</div>
-<br />
-<br />
+<div class="col-lg-12 person-color">
+    <br />
+    <br />
+    <div class="teacher-color facultative-label">
+        <h2 class="text-center"> @Model.Name</h2>
+        <p>Тема: @Model.Theme</p>
+        <p>Описание: @Model.Description</p>
+        <p>Статус: @Model.Status</p>
+        <p>Количество зарегистрированных: @Model.Audience.Count</p>
+    </div>
+    <br />
+    <br />
 
-<h2 class="text-center">Журнал оценок</h2>
+    <h2 class="text-center">Журнал оценок</h2>
 
-<br />
+    <br />
 
-@if (Model.Log != null)
-{
-    <table class="table table-bordered">
-        <tr class="label-default">
-            <th>Name</th>
-            <th>Mark</th>
-            <th>Date</th>
-        </tr>
-        @foreach (var item in Model.Log.Reports)
-        {
-            string str = item.Mark < 60 ? "label-danger"
-                : (item.Mark < 75) ? "label-warning" : (item.Mark < 90) ? "label-primary" : "label-success";
-            <tr class='@str'>
-                <td>@item.Listener.FullName</td>
-                <td>@item.Mark</td>
-                <td>@item.Date.ToShortDateString()</td>
+    @if (Model.Log != null)
+    {
+        <table class="table table-bordered">
+            <tr class="label-default">
+                <th>Name</th>
+                <th>Mark</th>
+                <th>Date</th>
             </tr>
-        }
-    </table>
-}
+            @foreach (var item in Model.Log.Reports)
+            {
+                string str = item.Mark < 60 ? "label-danger"
+                    : (item.Mark < 75) ? "label-warning" : (item.Mark < 90) ? "label-primary" : "label-success";
+                <tr class='@str'>
+                    <td>@item.Listener.FullName</td>
+                    <td>@item.Mark</td>
+                    <td>@item.Date.ToShortDateString()</td>
+                </tr>
+            }
+        </table>
+    }
+</div>

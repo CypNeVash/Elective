@@ -3,7 +3,7 @@
     ViewBag.Title = "Регистрация";
 }
 
-<div class="col-md-7 col-md-offset-2">
+<div class="col-md-7 col-md-offset-2 fon-color">
     <h2 class="text-center">@ViewBag.Title.</h2>
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-inline" }))
@@ -62,5 +62,7 @@
 
         <input type="submit" value="Регистрация" class="btn btn-success text-right" />
 
+        <br />
+        <br />
     }
 </div>

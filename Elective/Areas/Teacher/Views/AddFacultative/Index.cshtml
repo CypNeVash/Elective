@@ -1,9 +1,9 @@
 ﻿@model FacultativeViewModel
 @using BusinessModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "faculty";
 }
-<div class="col-md-7 col-md-offset-2">
+<div class="col-md-7 col-md-offset-2 fon-color">
     <h2 class="text-center">Создать факультатив</h2>
     <hr />
     @using (Html.BeginForm("Index", "AddFacultative", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -35,6 +35,9 @@
         <p>@Html.RadioButtonFor(m => m.Status, FacultativeStatus.Finished) @FacultativeStatus.Finished.ToString()</p>
 
         <input type="submit" value="Добавить" class="btn btn-success text-right" />
+
+        <br />
+        <br />
     }
 
 </div>

@@ -101,14 +101,18 @@ namespace Elective
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "Student");
+
                     SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+
                     DependencyResolver.Current.GetService<IDefaultRepository<Log>>().Add(
                         new Log(GetType().ToString()
                         , "Register"
                         , LogStatus.info
                         , "Register"
                         , User.Identity.Name + " " + HttpContext.Request.UserHostAddress));
+
                     _accountService.CreateStudent(user,model.FirstName,model.SecondName,model.Age,model.BirthDate);
+
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -120,12 +124,14 @@ namespace Elective
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
             DependencyResolver.Current.GetService<IDefaultRepository<Log>>().Add(
                         new Log(GetType().ToString()
                         , "LogOff"
                         , LogStatus.info
                         , "SingOut"
                         , User.Identity.Name + " " + HttpContext.Request.UserHostAddress));
+
             return RedirectToAction("Index", "Home");
         }
     }

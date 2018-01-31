@@ -44,7 +44,7 @@
 
         <p>
             @Html.LabelFor(m => m.BirthDate)
-            @Html.TextBoxFor(m => m.BirthDate, new { @Value = DateTime.Now.ToString("yyyy/MM/dd") })
+            @Html.TextBoxFor(m => m.BirthDate, new { @placeholder = DateTime.Now.ToString("yyyy/MM/dd") })
         </p>
         <p>@Html.ValidationMessageFor(m => m.BirthDate, "")</p>
 

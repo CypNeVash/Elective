@@ -29,7 +29,7 @@
         <p>@Html.ValidationMessageFor(m => m.Description, "")</p>
 
         <p>@Html.LabelFor(m => m.StartFacultative)</p>
-        <p>@Html.TextBoxFor(m => m.StartFacultative, new { @Value = DateTime.Now.ToString("yyyy/MM/dd") })</p>
+        <p>@Html.TextBoxFor(m => m.StartFacultative, new { @placeholder = DateTime.Now.ToString("yyyy/MM/dd") })</p>
         <p>@Html.ValidationMessageFor(m => m.StartFacultative, "")</p>
 
         <p>@Html.LabelFor(m => m.Status)</p>

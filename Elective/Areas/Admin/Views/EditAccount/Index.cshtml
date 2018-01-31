@@ -26,7 +26,7 @@
         <p>@Html.EditorFor(m => m.Age)</p>
 
         <p>@Html.LabelFor(m => m.BirthDate)</p>
-        <p>@Html.TextBoxFor(m => m.BirthDate, new { @Value = DateTime.Now.ToString("yyyy/MM/dd") })</p>
+        <p>@Html.TextBoxFor(m => m.BirthDate, new { @placeholder = DateTime.Now.ToString("yyyy/MM/dd") })</p>
 
         <p> @Html.LabelFor(m => m.OldPassword)</p>
         <p> @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control", @placeholder = "OldPassword" })</p>

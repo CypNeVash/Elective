@@ -32,7 +32,7 @@ namespace Elective
 
         [Required]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Start facultative time")]
+        [Display(Name = "Start facultative")]
         public DateTime StartFacultative { get; set; }
 
         [Required]

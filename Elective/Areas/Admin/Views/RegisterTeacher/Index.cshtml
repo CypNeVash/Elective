@@ -1,14 +1,12 @@
 ﻿@model RegisterViewModel
 @{
-    ViewBag.Title = "RegisterTeacher";
+    ViewBag.Title = "Register Teacher";
 }
-<div class="col-md-7 col-md-offset-2">
-    <h2 class="text-center"> @ViewBag.Title</h2>
-
+<div class="col-md-7 col-md-offset-2 fon-color">
     @using (Html.BeginForm("Index", "RegisterTeacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4 class="text-center">Создайте новую учетную запись.</h4>
+        <h3 class="text-center">Создайте новую учетную запись для учителя.</h3>
         <hr />
 
         <p>@Html.LabelFor(m => m.Email)</p>
@@ -45,5 +43,7 @@
 
         <input type="submit" value="Регистрация" class="btn btn-success text-right" />
 
+        <br />
+        <br />
     }
 </div>

@@ -19,11 +19,15 @@ namespace BusinessModel
         virtual public DbSet<Report> Reports { get; set; }
         virtual public DbSet<Log> Logs { get; set; }
         virtual public DbSet<Account> Accounts { get; set; }
+        virtual public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ReportBook>().HasOptional(x => x.Elective).WithOptionalDependent(x => x.Log);
+            modelBuilder.Entity<Message>().HasOptional(x => x.From).WithMany(s => s.MessageSend).HasForeignKey(s=>s.From_id);
+            modelBuilder.Entity<Message>().HasOptional(x => x.To).WithMany(s => s.MessagesReceive ).HasForeignKey(s => s.To_id);
+
         }
 
         public virtual void SetModified(object entity)

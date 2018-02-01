@@ -5,6 +5,7 @@ using Ninject.Web.Common;
 using Ninject.Web.Common.WebHost;
 using Ninject.Web.Mvc;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -13,6 +14,18 @@ namespace Elective
 {
     public class MvcApplication : NinjectHttpApplication
     {
+        protected void Application_EndRequest()
+        {
+            if (Context.Request.IsAuthenticated)
+            {
+                Context.Cache.Add(User.Identity.Name
+                , DependencyResolver.Current.GetService<IAccountService>().GetNotReadMessages(User.Identity.Name), null
+                , DateTime.Now.AddSeconds(15)
+                , TimeSpan.Zero, System.Web.Caching.CacheItemPriority.Default
+                , null);
+            }
+        }
+
         protected override void OnApplicationStarted()
         {
             base.OnApplicationStarted();
@@ -25,14 +38,14 @@ namespace Elective
             DependencyResolver.Current.GetService<IDefaultRepository<Log>>().Add(
                 new Log(GetType().ToString()
                 , "OnApplicationStarted"
-                ,LogStatus.info
-                ,"App Start"
-                ,""));
+                , LogStatus.info
+                , "App Start"
+                , ""));
         }
 
         protected override IKernel CreateKernel()
         {
-            
+
             var kernel = new StandardKernel();
 
             RegisterServices(kernel);
@@ -43,6 +56,7 @@ namespace Elective
         private void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ElectiveContext>().ToSelf().InRequestScope();
+            kernel.Bind<IDefaultRepository<Message>>().To<MessageRepository>();
             kernel.Bind<IDefaultRepository<Student>>().To<StudentRepository>();
             kernel.Bind<IDefaultRepository<Teacher>>().To<TeacherRepository>();
             kernel.Bind<IDefaultRepository<Account>>().To<AccountRepository>();

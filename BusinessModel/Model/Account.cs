@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessModel
 {
@@ -34,5 +31,7 @@ namespace BusinessModel
 
         public int Age { get; set; }
         public DateTime BirthDate { get; set; } = DateTime.Now;
+        public ICollection<Message> MessagesReceive { get; set; }
+        public ICollection<Message> MessageSend { get; set; }
     }
 }

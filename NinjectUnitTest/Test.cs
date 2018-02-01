@@ -58,6 +58,8 @@ namespace UnitTest
                 .WithConstructorArgument("electiveContext", mockContext.Object);
             kernel.Bind<IDefaultRepository<Report>>().To<ReportRepository>()
                 .WithConstructorArgument("electiveContext", mockContext.Object);
+            kernel.Bind<IDefaultRepository<Message>>().To<MessageRepository>()
+                .WithConstructorArgument("electiveContext", mockContext.Object);
 
             kernel.Bind<IStudentService>().To<StudentService>();
             kernel.Bind<ITeacherService>().To<TeacherService>();

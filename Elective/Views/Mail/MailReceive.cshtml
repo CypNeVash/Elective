@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "MailRecieve";
+}
+
+@using BusinessModel
+@model ICollection<Message>
+
+<div class="col-lg-12 person-color">
+    <h2 class="text-center">Все сообщения</h2>
+    <br />
+
+    <table class="table tab-content table-bordered">
+        <thead class="label-danger">
+            <tr>
+                <th>Name</th>
+                <th>Theme</th>
+                <th>Description</th>
+                <th>Date</th>
+
+            </tr>
+        </thead>
+        
+            @foreach (var item in Model)
+            {
+                if (item.Status == MessageState.NotRead)
+                {
+                <tbody id="myTable" class="label-info">
+                    <tr>
+                        <td>@item.From.FullName</td>
+                        <td>@item.Theme</td>
+                        <td>@item.Description</td>
+                        <td>@item.SendDate</td>
+                        <td>@Html.ActionLink("Посмотреть", "MailOptionR", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+                    </tr>
+                </tbody>
+                }
+                if (item.Status == MessageState.Read)
+                {
+                    <tbody id="myTable" class="label-success">
+                        <tr>
+                            <td>@item.From.FullName</td>
+                            <td>@item.Theme</td>
+                            <td>@item.Description</td>
+                            <td>@item.SendDate</td>
+                            <td>@Html.ActionLink("Посмотреть", "MailOptionR", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+                        </tr>
+                    </tbody>
+                }
+            }
+
+    </table>
+</div>

@@ -11,15 +11,29 @@
 
 </head>
 
+@helper ButtonDrop(string role, IEnumerable<MvcHtmlString> options, string style)
+{
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle @style" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@role <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            @foreach (var item in options)
+            {
+                <li role="separator" class="divider"></li>
+                <li>@item</li>
+            }
+        </ul>
+    </li>
+}
+
 <body>
     <header class="page-header">
-        <img class="brand" src="~/Content/Brand.png"> 
+        <img class="brand" src="~/Content/Brand.png">
     </header>
 
 
     <br /> <br /> <br /> <br />
 
-    <div class="main inline">    
+    <div class="main inline">
         <div class="content">
             <p class="levp"><img class="lev" src="~/Content/Lev.png"></p>
             <nav class="menu navbar navbar-default">
@@ -33,41 +47,29 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Админ <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null)</li>
-                                        <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null)</li>
-                                    </ul>
-                                </li>
+
+                                @ButtonDrop("Админ", new List<MvcHtmlString> {
+                                    @Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null),
+                                    @Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null)
+                                }, "");
                             }
 
                             @if (User.IsInRole("Student"))
                             {
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Студент <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null)</li>
-                                        <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)</li>
-                                    </ul>
-                                </li>
+
+                                @ButtonDrop("Студент", new List<MvcHtmlString> {
+                                    @Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null),
+                                    @Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)
+                                }, "");
                             }
 
                             @if (User.IsInRole("Teacher"))
                             {
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle text-danger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Учитель <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null)</li>
-                                        <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)</li>
-                                    </ul>
-                                </li>
+
+                                @ButtonDrop("Учитель", new List<MvcHtmlString> {
+                                    @Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null),
+                                    @Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)
+                                }, "");
                             }
                             <li>@Html.ActionLink("Контакты", "Contact", "Home", new { Area = "" }, null)</li>
                             <li></li>
@@ -84,7 +86,30 @@
                             }
                             else
                             {
-                                <li>@Html.ActionLink(@User.Identity.Name.Insert(0, " "), "Index", "PersonalArea", new { Area = "" }, new { @class = "glyphicon glyphicon-user" })</li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name.Insert(0, " ") <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Профиль", "Index", "PersonalArea", new { Area = "" }, null)</li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Написать", "MailSend", "Mail", new { Area = "" }, null)</li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>
+                                            <a href="@Url.Action("MailReceive", "Mail", new { Area = "" }, null)">
+                                                Входящие
+                                                <span class='badge' style='background-color:blue'>
+                                                   @if (Cache.Get(User.Identity.Name.ToLower()) != null)
+                                                   {
+                                                       @Cache.Get(User.Identity.Name.ToLower()).ToString();
+                                                   }
+                                                   else { <span>0</span> }
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li role="separator" class="divider"></li>
+                                        <li>@Html.ActionLink("Отправленные", "MailSendOut", "Mail", new { Area = "" }, null)</li>
+                                    </ul>
+                                </li>
                                 <li>@Html.ActionLink(" Выйти", "LogOff", "Account", new { Area = "" }, new { @class = "glyphicon glyphicon-log-out" })</li>
                             }
                         </ul>
@@ -96,8 +121,8 @@
     </div>
 
     <footer>
-            <hr />
-           <p class="text-right">&copy; Parviz Musaiev</p>
+        <hr />
+        <p class="text-right">&copy; Parviz Musaiev</p>
     </footer>
 </body>
 </html>

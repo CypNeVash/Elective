@@ -22,5 +22,15 @@ namespace BusinessModel
         void DeleteTeacher(User user);
 
         void CreateTeacher(User user, string firstName, string secondName, int age, DateTime birthDate);
+
+        void SendMessage(string identityNameFrom, string identityNameTo, string theme, string message);
+
+        Account GetAllMessages(string identityName);
+
+        int GetNotReadMessages(string identityName);
+
+        Message GetMessageReceive(string identityName, Guid id);
+
+        Message GetMessageSend(string identityName, Guid id);
     }
 }

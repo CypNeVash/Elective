@@ -7,7 +7,7 @@
 @model Account
 
 <br />
-<div class="person-color facultative-label">
+<div class="person-color col-md-7 col-md-offset-2">
 
     <h2 class="text-center">@Model.FullName</h2>
     <br />
@@ -23,7 +23,8 @@
         </div>
     </div>
     <br />
-
+    <br />
+    <br />
     <p class=" text-right">
         @Html.ActionLink("Редактировать", "Edit", "PersonalArea", null, new { @class = "btn btn-success" })
     </p>

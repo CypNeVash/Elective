@@ -60,6 +60,7 @@
     <Compile Include="Context\ElectiveContextInitializer.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Log.cs" />
+    <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Model\Teacher.cs" />
     <Compile Include="Model\User.cs" />
@@ -74,6 +75,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Repository\Implement\LogRepository.cs" />
+    <Compile Include="Repository\Implement\MessageRepository.cs" />
     <Compile Include="Repository\Implement\StudentRepository.cs" />
     <Compile Include="Repository\Implement\TeacherRepository.cs" />
     <Compile Include="Repository\Implement\FacultativeRepository.cs" />

@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = Model.Theme;
+}
+
+@using BusinessModel
+
+@model Message
+
+<div class="facultative-color facultative-label text-balck">
+    <h2 class="text-center">@Model.Theme</h2>
+    <p>Кто: @Model.From.FullName</p>
+    <p>Кому: @Model.To.FullName</p>
+    <p>Дата: @Model.SendDate</p>
+    <p>Сообщение: @Model.Text</p>
+</div>

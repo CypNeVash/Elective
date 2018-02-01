@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System.Threading.Tasks;
+using System;
 using System.Web;
 using System.Web.Mvc;
 
@@ -59,6 +59,7 @@ namespace Elective
             switch (result)
             {
                 case SignInStatus.Success:
+
                     DependencyResolver.Current.GetService<IDefaultRepository<Log>>().Add(
                         new Log(GetType().ToString()
                         , "Login"

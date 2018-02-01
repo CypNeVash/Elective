@@ -86,12 +86,12 @@ footer {
 }
 
 .dropdown ul, .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-        color: #333333;
+        color: #000000;
         background-color: chartreuse;
     }
 
 .navbar-default .navbar-nav > li > a {
-    color: #333;
+    color: #000000;
 }
 
 .navbar-nav {

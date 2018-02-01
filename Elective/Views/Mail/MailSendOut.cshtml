@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "SendOut";
+}
+
+@using BusinessModel
+
+@model ICollection<Message>
+
+<div class="col-lg-12 person-color">
+    <h2 class="text-center">Все сообщения</h2>
+    <br />
+
+    <table class="table tab-content table-bordered">
+        <thead class="label-danger">
+            <tr>
+                <th>Name</th>
+                <th>Theme</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+            {
+                <tbody id="myTable" class="label-info">
+                    <tr>
+                        <td>@item.To.FullName</td>
+                        <td>@item.Theme</td>
+                        <td>@item.Description</td>
+                        <td>@item.SendDate</td>
+                        <td>@Html.ActionLink("Посмотреть", "MailOptionS", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+                    </tr>
+                </tbody>
+        }
+
+    </table>
+</div>
+

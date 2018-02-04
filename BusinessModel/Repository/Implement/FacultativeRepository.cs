@@ -32,7 +32,20 @@ namespace BusinessModel
                 .Include(s => s.Lecturer)
                 .Include(s => s.Log)
                 .Include(s => s.Log.Reports)
-                .Include(s => s.Log.Elective).FirstOrDefault();
+                .Include(s => s.Log.Elective).Single();
+        }
+
+        public override void Remove(Facultative data)
+        {
+            if (data.Log != null)
+            {
+                foreach (var i in data.Log.Reports.ToList())
+                    _electiveContext.Reports.Remove(i);
+
+                _electiveContext.ReportBooks.Remove(data.Log);
+            }
+
+            base.Remove(data);
         }
     }
 }

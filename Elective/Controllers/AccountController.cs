@@ -59,6 +59,11 @@ namespace Elective
             switch (result)
             {
                 case SignInStatus.Success:
+                    HttpContext.Cache.Add(model.Login
+                     , DependencyResolver.Current.GetService<IAccountService>().GetNotReadMessages(model.Login), null
+                         , DateTime.Now.AddHours(1)
+                        , TimeSpan.Zero, System.Web.Caching.CacheItemPriority.Default
+                        , null);
 
                     DependencyResolver.Current.GetService<IDefaultRepository<Log>>().Add(
                         new Log(GetType().ToString()
@@ -103,6 +108,7 @@ namespace Elective
                 {
                     UserManager.AddToRole(user.Id, "Student");
 
+
                     SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
                     DependencyResolver.Current.GetService<IDefaultRepository<Log>>().Add(
@@ -112,7 +118,7 @@ namespace Elective
                         , "Register"
                         , User.Identity.Name + " " + HttpContext.Request.UserHostAddress));
 
-                    _accountService.CreateStudent(user,model.FirstName,model.SecondName,model.Age,model.BirthDate);
+                    _accountService.CreateStudent(user, model.FirstName, model.SecondName, model.Age, model.BirthDate);
 
                     return RedirectToAction("Index", "Home");
                 }

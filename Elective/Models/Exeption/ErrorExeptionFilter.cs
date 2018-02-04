@@ -23,7 +23,7 @@ namespace Elective
 
             filterContext.Result = new RedirectResult(url);
 
-            filterContext.ExceptionHandled = true;
+            filterContext.ExceptionHandled = false;
 
         }
     }

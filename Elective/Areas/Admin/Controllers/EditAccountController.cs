@@ -58,7 +58,11 @@ namespace Elective
                         _accountService.DeleteStudent(user);
                     if (UserManager.IsInRole(user.Id, "Teacher"))
                         _accountService.DeleteTeacher(user);
+                    if (UserManager.IsInRole(user.Id, "Admin"))
+                        _accountService.DeleteAdmin(user);
+
                     UserManager.Delete(user);
+
                     return RedirectToAction("Index", "AccountManager");
                 }
                 else

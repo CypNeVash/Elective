@@ -32,7 +32,7 @@ namespace BusinessModel
         {
             Message messenger = new Message(GetAccount(identityNameFrom)
                 , GetAccount(identityNameTo)
-                , MessageState.NotRead, theme, message, DateTime.Now);
+                , theme, message);
 
             _messageRepository.Add(messenger);
         }
@@ -43,12 +43,12 @@ namespace BusinessModel
                 .Include(s => s.MessageSend)
                 .Include(s => s.MessagesReceive)
                 .Include(s => s.MessageSend.Select(i => i.To))
-                .Include(s => s.MessagesReceive.Select(i => i.From)).FirstOrDefault();
+                .Include(s => s.MessagesReceive.Select(i => i.From)).Single();
         }
 
         public Account GetAccount(string identityName)
         {
-            return _accountRepository.Get().Where(s => s.Identity.UserName == identityName).FirstOrDefault();
+            return _accountRepository.Get().Where(s => s.Identity.UserName == identityName).Single();
         }
 
         public void ChangeStateEntity<U>(U data) where U : class
@@ -94,12 +94,18 @@ namespace BusinessModel
             return GetAllMessages(identityName).MessagesReceive.Where(s => s.Status == MessageState.NotRead).Count();
         }
 
-        public Message GetMessageReceive(string identityName, Guid id)
+        public Message GetMessageReceive(string identityName, Guid id, ref bool notRead)
         {
             Message message = GetAllMessages(identityName).MessagesReceive.Where(s => s.Id == id).FirstOrDefault();
 
             if (message != null)
-                message.Status = MessageState.Read;
+            {
+                if (message.Status == MessageState.NotRead)
+                {
+                    message.Status = MessageState.Read;
+                    notRead = true;
+                }
+            }
 
             _accountRepository.ChangeState(message);
 
@@ -108,7 +114,16 @@ namespace BusinessModel
 
         public Message GetMessageSend(string identityName, Guid id)
         {
-            return GetAllMessages(identityName).MessageSend.Where(s => s.Id == id).FirstOrDefault();
+            return GetAllMessages(identityName).MessageSend.Where(s => s.Id == id).Single();
+        }
+
+        public void DeleteAdmin(User user)
+        {
+            _logRepository.Add(new Log(GetType().ToString(), "Delete", LogStatus.info, "DeleteTeacher", user.Email));
+
+            Account account = GetAllMessages(user.UserName);
+
+            _accountRepository.Remove(account);
         }
     }
 }

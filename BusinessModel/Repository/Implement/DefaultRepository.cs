@@ -46,7 +46,7 @@ namespace BusinessModel
         /// <summary>
         /// Method for removing entity
         /// </summary>
-        public void Remove(T data)
+        public virtual void Remove(T data)
         {
             _electiveContext.Set<T>().Remove(data);
             Save();

@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Elective;
 using Ninject;
 using System.Web.Mvc;
@@ -14,11 +13,13 @@ using System.Web;
 using System.Web.WebPages;
 using System.Collections.Specialized;
 using System.Globalization;
+using NUnit.Framework;
 
-namespace UnitTest
+
+namespace ElectiveTest
 {
-    [TestClass]
-    public class Test
+    [TestFixture]
+    public class UnitTest
     {
         private List<User> _users = new List<User>();
         private List<Account> _accounts = new List<Account>();
@@ -28,11 +29,12 @@ namespace UnitTest
         private List<ReportBook> _reportBooks = new List<ReportBook>();
         private List<Report> _reports = new List<Report>();
         private List<Teacher> _teachers = new List<Teacher>();
+        private List<Message> _messages = new List<Message>();
 
         private Mock<ElectiveContext> mockContext;
 
-        [TestInitialize]
-        public void MyTestInitialize()
+
+        public UnitTest()
         {
             mockContext = new Mock<ElectiveContext>();
             InitContext();
@@ -78,6 +80,8 @@ namespace UnitTest
                 .Union(_students.Select(s => s.Identity))
                 .Union(_teachers.Select(s => s.Identity)).AsQueryable());
 
+            var mockSet_messages = CreateMockSet(_messages.Union(_students.Select(s => s.MessageSend).OfType<Message>()).AsQueryable());
+
             var mockSet_logs = CreateMockSet(_logs.AsQueryable());
             var mockSet_facultative = CreateMockSet(_facultatives.AsQueryable());
             var mockSet_teacher = CreateMockSet(_teachers.AsQueryable());
@@ -85,6 +89,7 @@ namespace UnitTest
             var mockSet_reportBook = CreateMockSet(_reportBooks.Union(_facultatives.Where(s => s.Log != null).Select(s => s.Log)).AsQueryable());
             var mockSet_student = CreateMockSet(_students.AsQueryable());
 
+            mockContext.Setup(c => c.Messages).Returns(mockSet_messages.Object);
             mockContext.Setup(c => c.Accounts).Returns(mockSet_accounts.Object);
             mockContext.Setup(c => c.Users).Returns(mockSet_users.Object);
             mockContext.Setup(c => c.Students).Returns(mockSet_student.Object);
@@ -94,6 +99,7 @@ namespace UnitTest
             mockContext.Setup(c => c.ReportBooks).Returns(mockSet_reportBook.Object);
             mockContext.Setup(c => c.Logs).Returns(mockSet_logs.Object);
 
+            mockContext.Setup(c => c.Set<Message>()).Returns(mockContext.Object.Messages);
             mockContext.Setup(c => c.Set<Account>()).Returns(mockContext.Object.Accounts);
             mockContext.Setup(c => c.Set<Log>()).Returns(mockContext.Object.Logs);
             mockContext.Setup(c => c.Set<Teacher>()).Returns(mockContext.Object.Teachers);
@@ -116,6 +122,7 @@ namespace UnitTest
             mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(dataQ.Expression);
             mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(dataQ.ElementType);
             mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(dataQ.GetEnumerator());
+            mockSet.As<IEnumerable<T>>().Setup(m=>m.GetEnumerator()).Returns(dataQ.GetEnumerator());
 
             mockSet.Setup(m => m.Include(It.IsAny<string>())).Returns(mockSet.Object);
 
@@ -185,6 +192,14 @@ namespace UnitTest
                     mockSet.Setup(x => x.Remove(It.IsAny<T>()))
                     .Callback((T de) => _accounts.Remove(de as Account));
                     break;
+                case Message acc:
+                    mockSet.Setup(x => x.Add(It.IsAny<T>()))
+                    .Callback((T de) => _messages.Add(de as Message));
+
+                    mockSet.Setup(x => x.Remove(It.IsAny<T>()))
+                    .Callback((T de) => _messages.Remove(de as Message));
+                    break;
+
             }
 
             return mockSet;
@@ -336,7 +351,30 @@ namespace UnitTest
             return controllerContextMock;
         }
 
-        [TestMethod]
+        [Test]
+        public void TestMessageRepository()
+        {
+            RestoreDate();
+
+            var messageRepository = DependencyResolver.Current.GetService<IDefaultRepository<Message>>();
+
+            messageRepository.Add(new Message(_accounts[0], _accounts[0], "asdasdas", "sadsad"));
+
+            Assert.AreNotEqual(_messages.Where(s => s.From == _accounts[0]).Where(s => s.To == _accounts[0]).Single().Text, "asdasdas");
+            Assert.AreEqual(_messages.Where(s => s.From == _accounts[0]).Where(s => s.To == _accounts[0]).Single().Text, "sadsad");
+
+            Assert.AreEqual( messageRepository.Get().Where(s => s.From == _accounts[0]).Count(), 1);
+
+            messageRepository.Add(new Message(_accounts[0], _accounts[0], "asdasdas77", "sadsad78"));
+
+            Assert.AreEqual(messageRepository.Get().Where(s => s.From == _accounts[0]).Count(), 2);
+
+            messageRepository.Remove(_messages.Where(s => s.From == _accounts[0]).Where(s => s.To == _accounts[0]).First());
+
+            Assert.AreEqual(messageRepository.Get().Where(s => s.From == _accounts[0]).Count(), 1);
+        }
+
+        [Test]
         public void TestAccountRepository()
         {
             RestoreDate();
@@ -353,13 +391,9 @@ namespace UnitTest
 
             Assert.IsNotNull(_accounts.Where(s => account.Id == s.Id).FirstOrDefault());
             Assert.AreEqual(accountRepository.Get(account.Id).Id, account.Id);
-
-            accountRepository.Remove(account);
-
-            Assert.IsNull(accountRepository.Get(account.Id));
         }
 
-        [TestMethod]
+        [Test]
         public void TestTeacherRepository()
         {
             RestoreDate();
@@ -379,10 +413,10 @@ namespace UnitTest
 
             teacherRepository.Remove(account);
 
-            Assert.IsNull(teacherRepository.Get(account.Id));
+            Assert.AreEqual(_teachers.Where(s => s.Id == account.Id).Count(), 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStudentRepository()
         {
             RestoreDate();
@@ -402,10 +436,10 @@ namespace UnitTest
 
             studentRepository.Remove(account);
 
-            Assert.IsNull(studentRepository.Get(account.Id));
+            Assert.AreEqual(_students.Where(s => s.Id == account.Id).Count(), 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestReportRepository()
         {
             RestoreDate();
@@ -420,15 +454,15 @@ namespace UnitTest
 
             reportRepository.Add(report);
 
-            Assert.IsNotNull(_reports.Where(s => report.Id == s.Id).FirstOrDefault());
+            Assert.IsNotNull(_reports.Where(s => report.Id == s.Id).Single());
             Assert.AreEqual(reportRepository.Get(report.Id).Id, report.Id);
 
             reportRepository.Remove(report);
 
-            Assert.IsNull(reportRepository.Get(report.Id));
+            Assert.AreEqual(_reportBooks.Where(s=>s.Id==report.Id).Count(), 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestReportBookRepository()
         {
             RestoreDate();
@@ -444,10 +478,10 @@ namespace UnitTest
 
             reportBookRepository.Remove(reportBook);
 
-            Assert.IsNull(reportBookRepository.Get(reportBook.Id));
+            Assert.AreEqual(reportBookRepository.Get().Where(s=>s.Id == reportBook.Id).Count(),0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestFacultativeRepository()
         {
             RestoreDate();
@@ -463,10 +497,10 @@ namespace UnitTest
 
             facultativeBookRepository.Remove(facultative);
 
-            Assert.IsNull(facultativeBookRepository.Get(facultative.Id));
+            Assert.AreEqual(facultativeBookRepository.Get().Where(s=>s.Id == facultative.Id).Count(), 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestAccountService()
         {
             RestoreDate();
@@ -496,14 +530,23 @@ namespace UnitTest
 
             Assert.IsNotNull(accountService.GetAccount("Student"));
 
-            accountService.DeleteStudent(student);
-            accountService.DeleteTeacher(teacher);
+            accountService.SendMessage(account.Identity.UserName, account1.Identity.UserName, "dasdsadas", "sdasdasda123");
 
-            Assert.IsNull(_students.Where(s => s.FirstName == "lal").FirstOrDefault());
-            Assert.IsNull(_teachers.Where(s => s.FirstName == "lala").FirstOrDefault());
+            Assert.AreEqual(_messages.Where(s => s.Text == "sdasdasda123").Count(), 1);
+
+            accountService.DeleteAdmin(user);
+
+            
+
+            accountService.DeleteStudent(_students[0].Identity);
+            accountService.DeleteTeacher(_teachers[0].Identity);
+
+
+
+
         }
 
-        [TestMethod]
+        [Test]
         public void TestStudentService()
         {
             RestoreDate();
@@ -521,7 +564,7 @@ namespace UnitTest
             Assert.AreEqual(_students[0].RegistrFacultatives.Count, 1);
         }
 
-        [TestMethod]
+        [Test]
         public void TestTeacherService()
         {
             RestoreDate();
@@ -562,9 +605,11 @@ namespace UnitTest
             teachertService.DeleteFacultative(_facultatives[0]);
 
             Assert.AreEqual(_facultatives.Count, count - 1);
+
+
         }
 
-        [TestMethod]
+        [Test]
         public void TestTeacherFacultativeController()
         {
             RestoreDate();
@@ -583,7 +628,7 @@ namespace UnitTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestEditFacultativeController()
         {
             RestoreDate();
@@ -637,7 +682,7 @@ namespace UnitTest
             Assert.AreEqual(facultative.Status, FacultativeStatus.Finished);
         }
 
-        [TestMethod]
+        [Test]
         public void TestAddFacultativeController()
         {
             RestoreDate();
@@ -689,7 +734,7 @@ namespace UnitTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestAddLogController()
         {
             RestoreDate();
@@ -731,7 +776,7 @@ namespace UnitTest
             Assert.AreEqual(facultative.Name, facultative.Log.Name);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStudentFacultativeController()
         {
             RestoreDate();
@@ -746,7 +791,7 @@ namespace UnitTest
             Assert.IsNotNull(((ViewResult)result).Model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStudentFacultativesController()
         {
             RestoreDate();
@@ -761,10 +806,10 @@ namespace UnitTest
 
             IEnumerable<Facultative> facultatives = (IEnumerable<Facultative>)(((ViewResult)result).Model);
 
-            Assert.AreEqual(facultatives.Count(),0);
+            Assert.AreEqual(facultatives.Count(), 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStudentManagerController()
         {
             RestoreDate();
@@ -788,7 +833,7 @@ namespace UnitTest
             Assert.AreEqual(_students[0].RegistrFacultatives.Count, 1);
         }
 
-        [TestMethod]
+        [Test]
         public void TestPersonalAreaController()
         {
             RestoreDate();

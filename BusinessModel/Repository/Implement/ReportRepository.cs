@@ -24,7 +24,7 @@ namespace BusinessModel
 
         public override Report Get(Guid id)
         {
-            return _electiveContext.Reports.Where(s=>s.Id == id).Include(s => s.Listener).FirstOrDefault();
+            return _electiveContext.Reports.Where(s=>s.Id == id).Include(s => s.Listener).Single();
         }
     }
 }

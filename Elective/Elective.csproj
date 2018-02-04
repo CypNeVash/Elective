@@ -300,7 +300,6 @@
     <Content Include="Views\PersonalArea\Index.cshtml" />
     <Content Include="Views\PersonalArea\Edit.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Mail\Index.cshtml" />
     <Content Include="Views\Mail\MailSend.cshtml" />
     <Content Include="Views\Mail\MailReceive.cshtml" />
     <Content Include="Views\Mail\MailOption.cshtml" />

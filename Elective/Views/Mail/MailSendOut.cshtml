@@ -7,12 +7,25 @@
 
 @model ICollection<Message>
 
+@helper MessageInfo(Message item, string style)
+{
+    <tbody id="myTable" class=@style>
+        <tr>
+            <td>@item.To.FullName</td>
+            <td>@item.Theme</td>
+            <td>@item.Description</td>
+            <td>@item.SendDate</td>
+            <td>@Html.ActionLink("Посмотреть", "MailOptionS", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+        </tr>
+    </tbody>
+}
+
 <div class="col-lg-12 person-color">
     <h2 class="text-center">Все сообщения</h2>
     <br />
 
     <table class="table tab-content table-bordered">
-        <thead class="label-danger">
+        <thead class="text-balck teacher-color">
             <tr>
                 <th>Name</th>
                 <th>Theme</th>
@@ -22,16 +35,16 @@
         </thead>
 
         @foreach (var item in Model)
+        {
+            if (item.Status == MessageState.Read)
             {
-                <tbody id="myTable" class="label-info">
-                    <tr>
-                        <td>@item.To.FullName</td>
-                        <td>@item.Theme</td>
-                        <td>@item.Description</td>
-                        <td>@item.SendDate</td>
-                        <td>@Html.ActionLink("Посмотреть", "MailOptionS", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
-                    </tr>
-                </tbody>
+                @MessageInfo(item, "label-info");
+            }
+            else
+            {
+                @MessageInfo(item, "label-danger");
+            }
+
         }
 
     </table>

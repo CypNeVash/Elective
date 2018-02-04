@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BusinessModel
 {
@@ -31,7 +32,7 @@ namespace BusinessModel
 
         public int Age { get; set; }
         public DateTime BirthDate { get; set; } = DateTime.Now;
-        public ICollection<Message> MessagesReceive { get; set; }
-        public ICollection<Message> MessageSend { get; set; }
+        public ICollection<Message> MessagesReceive { get; set; } = new List<Message>();
+        public ICollection<Message> MessageSend { get; set; } = new List<Message>();
     }
 }

@@ -19,10 +19,16 @@ namespace BusinessModel
         public string Theme { get; set; }
         public string Description { get; set; }
         public FacultativeStatus Status { get; set; }
+
+        [Required]
         public Teacher Lecturer { get; set; }
+
         public ICollection<Student> Audience { get; set; } = new List<Student>();
+
         public DateTime StartFacultative { get; set; }
+
         public int Duration { get; set; }
+
         public ReportBook Log { get; set; }
 
         public Facultative()

@@ -24,7 +24,18 @@ namespace BusinessModel
 
         public override Account Get(Guid id)
         {
-            return _electiveContext.Accounts.Where(s => s.Id == id).Include(s => s.Identity).FirstOrDefault();
+            return _electiveContext.Accounts.Where(s => s.Id == id).Include(s => s.Identity).Single();
+        }
+
+        public override void Remove(Account data)
+        {
+            foreach (var item in data.MessageSend.ToList())
+                _electiveContext.Messages.Remove(item);
+
+            foreach (var item in data.MessagesReceive.ToList())
+                _electiveContext.Messages.Remove(item);
+
+            base.Remove(data);
         }
     }
 }

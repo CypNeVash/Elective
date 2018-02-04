@@ -21,6 +21,8 @@ namespace BusinessModel
 
         void DeleteTeacher(User user);
 
+        void DeleteAdmin(User user);
+
         void CreateTeacher(User user, string firstName, string secondName, int age, DateTime birthDate);
 
         void SendMessage(string identityNameFrom, string identityNameTo, string theme, string message);
@@ -29,7 +31,7 @@ namespace BusinessModel
 
         int GetNotReadMessages(string identityName);
 
-        Message GetMessageReceive(string identityName, Guid id);
+        Message GetMessageReceive(string identityName, Guid id, ref bool notRead);
 
         Message GetMessageSend(string identityName, Guid id);
     }

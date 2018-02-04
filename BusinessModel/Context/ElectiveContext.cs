@@ -25,9 +25,14 @@ namespace BusinessModel
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ReportBook>().HasOptional(x => x.Elective).WithOptionalDependent(x => x.Log);
-            modelBuilder.Entity<Message>().HasOptional(x => x.From).WithMany(s => s.MessageSend).HasForeignKey(s=>s.From_id);
-            modelBuilder.Entity<Message>().HasOptional(x => x.To).WithMany(s => s.MessagesReceive ).HasForeignKey(s => s.To_id);
 
+            modelBuilder.Entity<Message>().HasOptional(x => x.From).WithMany(s => s.MessageSend);
+            modelBuilder.Entity<Message>().HasOptional(x => x.To).WithMany(s => s.MessagesReceive);
+
+            modelBuilder.Entity<Teacher>()
+            .HasMany(p => p.MyFacultatives)
+            .WithOptional(t => t.Lecturer)
+            .WillCascadeOnDelete(false);
         }
 
         public virtual void SetModified(object entity)

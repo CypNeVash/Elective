@@ -20,7 +20,7 @@ namespace BusinessModel
 
         public override Message Get(Guid id)
         {
-            return _electiveContext.Messages.Where(s => s.Id == id).Include(s => s.From).Include(s => s.To).FirstOrDefault();
+            return _electiveContext.Messages.Where(s => s.Id == id).Include(s => s.From).Include(s => s.To).Single();
         }
     }
 }

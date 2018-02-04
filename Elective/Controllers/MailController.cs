@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Elective
 { 
+    [ErrorExeptionFilter]
     [Authorize]
     public class MailController : Controller
     {
@@ -15,12 +16,6 @@ namespace Elective
         public MailController(IAccountService accountService)
         {
             _accountService = accountService;
-        }
-
-        // GET: Mail
-        public ActionResult Index()
-        {
-            return View(_accountService.GetAllMessages(User.Identity.Name));
         }
 
         public ActionResult MailSend()
@@ -43,12 +38,23 @@ namespace Elective
 
         public ActionResult MailReceive()
         {
-            return View(_accountService.GetAllMessages(User.Identity.Name).MessagesReceive);
+            var messages = _accountService.GetAllMessages(User.Identity.Name).MessagesReceive;
+
+            HttpContext.Cache.Insert(User.Identity.Name.ToLower(), messages.Where(s => s.Status == MessageState.NotRead).Count()); 
+
+            return View(messages.OrderByDescending(s=>s.SendDate).OfType<Message>().ToList());
         }
 
         public ActionResult MailOptionR(Guid id)
         {
-            return View("MailOption", _accountService.GetMessageReceive(User.Identity.Name, id));
+            bool notRead = false;
+
+            Message message = _accountService.GetMessageReceive(User.Identity.Name, id, ref notRead);
+
+            if (notRead)
+                HttpContext.Cache.Insert(User.Identity.Name, (int)HttpContext.Cache.Get(User.Identity.Name) - 1);
+
+            return View("MailOption", message);
         }
 
         public ActionResult MailOptionS(Guid id)
@@ -58,7 +64,8 @@ namespace Elective
 
         public ActionResult MailSendOut()
         {
-            return View(_accountService.GetAllMessages(User.Identity.Name).MessageSend);
+            return View(_accountService.GetAllMessages(User.Identity.Name)
+                .MessageSend.OrderByDescending(s=>s.SendDate).OfType<Message>().ToList());
         }
 
     }

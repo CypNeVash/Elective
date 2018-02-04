@@ -31,7 +31,7 @@ namespace BusinessModel
                 .Include(s => s.Elective)
                 .Include(s => s.Reports)
                 .Include(s => s.Elective.Audience)
-                .Include(s => s.Elective.Lecturer).FirstOrDefault();
+                .Include(s => s.Elective.Lecturer).Single();
         }
     }
 }

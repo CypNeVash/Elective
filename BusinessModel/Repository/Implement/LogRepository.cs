@@ -23,7 +23,7 @@ namespace BusinessModel
 
         public override Log Get(Guid id)
         {
-            return _electiveContext.Logs.Where(s=>s.Id == id).FirstOrDefault();
+            return _electiveContext.Logs.Where(s=>s.Id == id).Single();
         }
     }
 }

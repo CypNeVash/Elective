@@ -18,11 +18,7 @@ namespace Elective
         {
             if (Context.Request.IsAuthenticated)
             {
-                Context.Cache.Add(User.Identity.Name
-                , DependencyResolver.Current.GetService<IAccountService>().GetNotReadMessages(User.Identity.Name), null
-                , DateTime.Now.AddSeconds(15)
-                , TimeSpan.Zero, System.Web.Caching.CacheItemPriority.Default
-                , null);
+                
             }
         }
 

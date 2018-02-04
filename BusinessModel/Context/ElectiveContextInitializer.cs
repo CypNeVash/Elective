@@ -10,7 +10,7 @@ namespace BusinessModel
     ///     Drop and create database if model changes and
     ///     seed the database.
     ///</summary>
-    class ElectiveContextInitializer : DropCreateDatabaseIfModelChanges<ElectiveContext>
+    class ElectiveContextInitializer : DropCreateDatabaseAlways<ElectiveContext>
     {
         protected override void Seed(ElectiveContext _context)
         {
@@ -23,8 +23,8 @@ namespace BusinessModel
 
 
             var user = new User();
-            user.UserName = "Admin@nure.ua";
-            user.Email = "Admin@nure.ua";
+            user.UserName = "admin@nure.ua";
+            user.Email = "admin@nure.ua";
             user.LockoutEnabled = true;
 
             _context.Accounts.Add(new Account(user, "sdas", "sadsad", 60, DateTime.Now));

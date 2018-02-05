@@ -12,7 +12,7 @@ namespace Elective
     /// controler for editing users by admin
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Role.Admin)]
     public class EditAccountController : Controller
     {
         private readonly IAccountService _accountService;
@@ -54,11 +54,11 @@ namespace Elective
                 if (button == "Delete")
                 {
                     User user = UserManager.FindById(id.ToString());
-                    if (UserManager.IsInRole(user.Id, "Student"))
+                    if (UserManager.IsInRole(user.Id, Role.Student))
                         _accountService.DeleteStudent(user);
-                    if (UserManager.IsInRole(user.Id, "Teacher"))
+                    if (UserManager.IsInRole(user.Id, Role.Student))
                         _accountService.DeleteTeacher(user);
-                    if (UserManager.IsInRole(user.Id, "Admin"))
+                    if (UserManager.IsInRole(user.Id, Role.Admin))
                         _accountService.DeleteAdmin(user);
 
                     UserManager.Delete(user);
@@ -66,7 +66,7 @@ namespace Elective
                     return RedirectToAction("Index", "AccountManager");
                 }
                 else
-                if (button == "Vac Ban")
+                if (button == "Ban")
                 {
                     UserManager.SetLockoutEnabled(id.ToString(), true);
                     UserManager.SetLockoutEndDate(id.ToString(), DateTimeOffset.MaxValue);
@@ -96,7 +96,7 @@ namespace Elective
                             }
                         }
                     }
-                }    
+                }
 
                 _accountService.ChangeStateEntity(account);
 

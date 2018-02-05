@@ -1,26 +1,26 @@
-﻿
+﻿@using BusinessModel
+
 @{
-    ViewBag.Title = "MailRecieve";
+    ViewBag.Title = StringResource.MailReceive;
 }
 
-@using BusinessModel
 @model ICollection<Message>
 
 @helper MessageInfo(Message item, string style)
-{
-    <tbody id="myTable" class=@style>
-        <tr>
-            <td>@item.From.FullName</td>
-            <td>@item.Theme</td>
-            <td>@item.Description</td>
-            <td>@item.SendDate</td>
-            <td>@Html.ActionLink("Посмотреть", "MailOptionR", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
-        </tr>
-    </tbody>
+    {
+        <tbody id="myTable" class=@style>
+            <tr>
+                <td>@item.From.FullName</td>
+                <td>@item.Theme</td>
+                <td>@item.Description</td>
+                <td>@item.SendDate</td>
+                <td>@Html.ActionLink(StringResource.Look, "MailOptionR", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+            </tr>
+        </tbody>
 }
 
 <div class="col-lg-12 person-color">
-    <h2 class="text-center">Все сообщения</h2>
+    <h2 class="text-center">@StringResource.AllMessages</h2>
     <br />
 
     <table class="table tab-content table-bordered">
@@ -33,18 +33,18 @@
 
             </tr>
         </thead>
-        
-            @foreach (var item in Model)
+
+        @foreach (var item in Model)
+        {
+            if (item.Status == MessageState.NotRead)
             {
-                if (item.Status == MessageState.NotRead)
-                {
                 @MessageInfo(item, "label-info")
-                }
-                if (item.Status == MessageState.Read)
-                {
-                    @MessageInfo(item, "label-success")
-                }
             }
+            if (item.Status == MessageState.Read)
+            {
+                @MessageInfo(item, "label-success")
+            }
+        }
 
     </table>
 </div>

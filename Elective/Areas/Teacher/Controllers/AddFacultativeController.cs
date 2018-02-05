@@ -1,7 +1,4 @@
 ﻿using BusinessModel;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Elective
@@ -11,7 +8,7 @@ namespace Elective
     /// facultative by teacher
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = Role.Teacher)]
     public class AddFacultativeController : Controller
     {
         private readonly IAccountService _accountService;
@@ -46,11 +43,11 @@ namespace Elective
                 {
                     Teacher teacher = _teacherService.GetTeacher(_accountService.GetAccount(User.Identity.Name));
 
-                    _teacherService.AddFacultative(new Facultative(model.Name, model.Theme,model.Description
+                    _teacherService.AddFacultative(new Facultative(model.Name, model.Theme, model.Description
                         , model.Status
                         , teacher
                         , model.StartFacultative
-                        ,model.Duration), teacher);
+                        , model.Duration), teacher);
 
                     return RedirectToAction("Index", "TeacherFacultative");
                 }

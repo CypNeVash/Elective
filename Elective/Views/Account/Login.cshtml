@@ -1,6 +1,7 @@
 ﻿@model LoginViewModel
+
 @{
-    ViewBag.Title = "Выполнить вход";
+    ViewBag.Title = StringResource.Autorize;
 }
 
 <div class="col-md-7 col-md-offset-2 person-color">
@@ -18,19 +19,19 @@
                 </span>
                 <p>@Html.ValidationMessageFor(m => m.Login, "")</p>
             </div>
-                <div class="input-group-sm">
-                    <span class="input-group-addon text-muted">
-                        <i class="glyphicon glyphicon-lock"></i>
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-                    </span>
-                    <p>@Html.ValidationMessageFor(m => m.Password, "")</p>
-                </div>
-                <p>
-                    @Html.CheckBoxFor(m => m.RememberMe)
-                    @Html.LabelFor(m => m.RememberMe)
-                    <input type="submit" value="Выполнить вход" class="btn btn-success text-right" />
-                </p>
-                <p>@Html.ActionLink("Регистрация нового пользователя", "Register")</p>
+            <div class="input-group-sm">
+                <span class="input-group-addon text-muted">
+                    <i class="glyphicon glyphicon-lock"></i>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                </span>
+                <p>@Html.ValidationMessageFor(m => m.Password, "")</p>
+            </div>
+            <p>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+                <input type="submit" value=@StringResource.AutorizeButton class="btn btn-success text-right" />
+            </p>
+            <p>@Html.ActionLink(StringResource.RegisterNewAccount, "Register")</p>
         }
     </section>
 </div>

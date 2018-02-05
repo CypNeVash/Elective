@@ -1,23 +1,22 @@
-﻿
-@{
-    ViewBag.Title = "SendOut";
-}
+﻿@using BusinessModel
 
-@using BusinessModel
+@{
+    ViewBag.Title = "Полученные сообщения";
+}
 
 @model ICollection<Message>
 
 @helper MessageInfo(Message item, string style)
-{
-    <tbody id="myTable" class=@style>
-        <tr>
-            <td>@item.To.FullName</td>
-            <td>@item.Theme</td>
-            <td>@item.Description</td>
-            <td>@item.SendDate</td>
-            <td>@Html.ActionLink("Посмотреть", "MailOptionS", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
-        </tr>
-    </tbody>
+    {
+        <tbody id="myTable" class=@style>
+            <tr>
+                <td>@item.To.FullName</td>
+                <td>@item.Theme</td>
+                <td>@item.Description</td>
+                <td>@item.SendDate</td>
+                <td>@Html.ActionLink("Посмотреть", "MailOptionS", "Mail", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+            </tr>
+        </tbody>
 }
 
 <div class="col-lg-12 person-color">

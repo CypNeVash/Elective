@@ -1,0 +1,40 @@
+﻿@using BusinessModel
+
+@{
+    ViewBag.Title = "Журнал событий";
+}
+
+@Scripts.Render("~/Facultative/js")
+
+@model IEnumerable<Log>
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<br />
+
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+
+<table class="table tab-content table-bordered">
+    <thead class="btn-danger">
+        <tr>
+            <th onclick="on(0)">Action</th>
+            <th onclick="on(1)">Controller</th>
+            <th onclick="on(2)">Status</th>
+            <th onclick="on(3)">Message</th>
+            <th onclick="on(4)">Name</th>
+            <th onclick="on(5)">Date</th>
+        </tr>
+    </thead>
+    <tbody id="myTable" class="btn-success">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Action</td>
+                <td class="searchTheme">@item.Controller</td>
+                <td>@item.Status</td>
+                <td>@item.Message</td>
+                <td>@item.Name</td>
+                <td class="searchName">@item.CreatedAt</td>
+            </tr>
+        }
+    </tbody>
+</table>

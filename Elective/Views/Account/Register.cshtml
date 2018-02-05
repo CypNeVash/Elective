@@ -1,6 +1,6 @@
 ﻿@model RegisterViewModel
 @{
-    ViewBag.Title = "Регистрация";
+    ViewBag.Title = StringResource.Registration;
 }
 
 <div class="col-md-7 col-md-offset-2 fon-color">
@@ -8,13 +8,13 @@
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-inline" }))
     {
-        @Html.AntiForgeryToken()
-        <h4 class="text-center">Создайте новую учетную запись.</h4>
+
+        <h4 class="text-center">@StringResource.CreateAccount</h4>
         <hr />
         <p>@Html.ValidationSummary("")</p>
         <p>
-        @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
         </p>
         <p>@Html.ValidationMessageFor(m => m.Email, "")</p>
 
@@ -57,10 +57,10 @@
         <p>
             @Html.LabelFor(m => m.ConfirmPassword)
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "ConfirmPassword" })
-         </p>
+        </p>
         <p>@Html.ValidationMessageFor(m => m.ConfirmPassword, "")</p>
 
-        <input type="submit" value="Регистрация" class="btn btn-success text-right" />
+        <input type="submit" value=@StringResource.CreateAccountButton class="btn btn-success text-right" />
 
         <br />
         <br />

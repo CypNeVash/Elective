@@ -1,12 +1,13 @@
 ﻿using BusinessModel;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Elective
-{ 
+{
+    /// <summary>
+    /// Mail controller
+    /// </summary>
     [ErrorExeptionFilter]
     [Authorize]
     public class MailController : Controller
@@ -18,11 +19,20 @@ namespace Elective
             _accountService = accountService;
         }
 
+        /// <summary>
+        /// Page for send message "GET" http method
+        /// </summary>
+        /// <returns></returns>
         public ActionResult MailSend()
         {
             return View();
         }
 
+        /// <summary>
+        /// Send message action
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Send(MailViewModel model)
         {
@@ -36,15 +46,24 @@ namespace Elective
             return View(model);
         }
 
+        /// <summary>
+        /// Return all receive messages for user 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult MailReceive()
         {
             var messages = _accountService.GetAllMessages(User.Identity.Name).MessagesReceive;
 
-            HttpContext.Cache.Insert(User.Identity.Name.ToLower(), messages.Where(s => s.Status == MessageState.NotRead).Count()); 
+            HttpContext.Cache.Insert(User.Identity.Name.ToLower(), messages.Where(s => s.Status == MessageState.NotRead).Count());
 
-            return View(messages.OrderByDescending(s=>s.SendDate).OfType<Message>().ToList());
+            return View(messages.OrderByDescending(s => s.SendDate).OfType<Message>().ToList());
         }
 
+        /// <summary>
+        /// Return select receieve message
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult MailOptionR(Guid id)
         {
             bool notRead = false;
@@ -57,15 +76,24 @@ namespace Elective
             return View("MailOption", message);
         }
 
+        /// <summary>
+        /// Return select send message
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult MailOptionS(Guid id)
         {
-            return View("MailOption",_accountService.GetMessageSend(User.Identity.Name, id));
+            return View("MailOption", _accountService.GetMessageSend(User.Identity.Name, id));
         }
 
+        /// <summary>
+        /// Return all user send out messages
+        /// </summary>
+        /// <returns></returns>
         public ActionResult MailSendOut()
         {
             return View(_accountService.GetAllMessages(User.Identity.Name)
-                .MessageSend.OrderByDescending(s=>s.SendDate).OfType<Message>().ToList());
+                .MessageSend.OrderByDescending(s => s.SendDate).OfType<Message>().ToList());
         }
 
     }

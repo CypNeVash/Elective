@@ -17,10 +17,8 @@ namespace BusinessModel
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
             var UserManager = new UserManager<User>(new UserStore<User>(_context));
 
-            roleManager.Create(new IdentityRole("Admin"));
-            roleManager.Create(new IdentityRole("Student"));
-            roleManager.Create(new IdentityRole("Teacher"));
-
+            foreach (var item in typeof(Role).GetFields())
+                roleManager.Create(new IdentityRole(item.Name));
 
             var user = new User();
             user.UserName = "admin@nure.ua";
@@ -33,7 +31,7 @@ namespace BusinessModel
 
             UserManager.Create(user, userPWD);
 
-            UserManager.AddToRole(user.Id, "Admin");
+            UserManager.AddToRole(user.Id, Role.Admin);
 
             user = new User();
             user.UserName = "parviz2@nure.ua";
@@ -44,9 +42,9 @@ namespace BusinessModel
 
             UserManager.Create(user, userPWD);
 
-            UserManager.AddToRole(user.Id, "Student");
+            UserManager.AddToRole(user.Id, Role.Student);
 
-            _context.Students.Add(new Student(user,"aaaaaa","aaaaa", 60, DateTime.Now));
+            _context.Students.Add(new Student(user, "aaaaaa", "aaaaa", 60, DateTime.Now));
 
             user = new User();
             user.UserName = "parviz@nure.ua";
@@ -57,11 +55,9 @@ namespace BusinessModel
 
             UserManager.Create(user, userPWD);
 
-            UserManager.AddToRole(user.Id, "Teacher");
+            UserManager.AddToRole(user.Id, Role.Teacher);
 
-            
-
-            _context.Facultatives.Add(new Facultative("Syp", "Nep","lalaala", FacultativeStatus.Registration, new Teacher(user, "bbbbbbb", "bbbbbbbb", 70, DateTime.Now), System.DateTime.Now,40));
+            _context.Facultatives.Add(new Facultative("Syp", "Nep", "lalaala", FacultativeStatus.Registration, new Teacher(user, "bbbbbbb", "bbbbbbbb", 70, DateTime.Now), System.DateTime.Now, 40));
 
             _context.SaveChanges();
         }

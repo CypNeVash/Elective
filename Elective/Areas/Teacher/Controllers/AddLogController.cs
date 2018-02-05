@@ -1,9 +1,6 @@
 ﻿using BusinessModel;
-using Microsoft.AspNet.Identity.Owin;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Elective
@@ -12,7 +9,7 @@ namespace Elective
     /// Controller for creating statement
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = Role.Teacher)]
     public class AddLogController : Controller
     {
         private readonly ITeacherService _teacherService;
@@ -57,7 +54,7 @@ namespace Elective
                     foreach (var item in reportBookVM.Reports)
                     {
                         facultative.Status = FacultativeStatus.Finished;
-                        
+
                         _teacherService.AddReport(reportBook, new Report(facultative.Audience.Where(s => s.Id == item.Id).FirstOrDefault(), item.Mark));
                     }
 

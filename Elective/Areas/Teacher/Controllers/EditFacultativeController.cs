@@ -14,7 +14,7 @@ namespace Elective
     /// facultative by teacher
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = Role.Teacher)]
     public class EditFacultativeController : Controller
     {
         private readonly IAccountService _accountService;

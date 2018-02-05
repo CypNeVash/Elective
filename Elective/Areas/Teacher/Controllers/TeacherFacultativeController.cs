@@ -8,7 +8,7 @@ namespace Elective
     /// Controller for displaying all facultative
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = Role.Teacher)]
     public class TeacherFacultativeController : Controller
     {
         private readonly IAccountService _accountService;

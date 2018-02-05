@@ -1,6 +1,6 @@
 ﻿@using BusinessModel
 @{
-    ViewBag.Title = "EditFacultative";
+    ViewBag.Title = "Редактировать факультатив";
 }
 @{Html.EnableClientValidation(false);}
 @model FacultativeViewModel
@@ -8,7 +8,7 @@
 
 
 <div class="col-md-7 col-md-offset-2 fon-color">
-    <h2 class=" text-center">Редактировать факультатив</h2>
+    <h2 class=" text-center">@ViewBag.Title</h2>
 
     @using (Html.BeginForm("Index", "EditFacultative", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {

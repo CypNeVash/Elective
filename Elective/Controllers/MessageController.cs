@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Elective
 {
@@ -11,7 +7,7 @@ namespace Elective
     /// </summary>
     public class MessageController : Controller
     {
-        public ActionResult Index( string message, string type)
+        public ActionResult Index(string message, string type)
         {
             ViewBag.Type = type;
             ViewBag.Message = message;

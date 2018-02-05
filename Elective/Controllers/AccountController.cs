@@ -106,7 +106,7 @@ namespace Elective
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "Student");
+                    UserManager.AddToRole(user.Id, Role.Student);
 
 
                     SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);

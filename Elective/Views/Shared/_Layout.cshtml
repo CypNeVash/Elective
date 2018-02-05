@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using BusinessModel
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,17 +14,17 @@
 </head>
 
 @helper ButtonDrop(string role, IEnumerable<MvcHtmlString> options, string style)
-{
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle @style" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@role <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            @foreach (var item in options)
-            {
-                <li role="separator" class="divider"></li>
-                <li>@item</li>
-            }
-        </ul>
-    </li>
+    {
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle @style" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@role <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                @foreach (var item in options)
+                {
+                    <li role="separator" class="divider"></li>
+                    <li>@item</li>
+                }
+            </ul>
+        </li>
 }
 
 <body>
@@ -30,8 +32,10 @@
         <img class="brand" src="~/Content/Brand.png">
     </header>
 
-
-    <br /> <br /> <br /> <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
     <div class="main inline">
         <div class="content">
@@ -45,31 +49,32 @@
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Главная", "Index", "Home", new { Area = "" }, null)</li>
 
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole(Role.Admin))
                             {
 
                                 @ButtonDrop("Админ", new List<MvcHtmlString> {
-                                    @Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null),
-                                    @Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null)
-                                }, "");
+                                                                    @Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null),
+                                                                    @Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null),
+                                                                    @Html.ActionLink("Журнал", "Index", "Logs", new { Area = "Admin" }, null)
+                                                                }, "");
                             }
 
-                            @if (User.IsInRole("Student"))
+                            @if (User.IsInRole(Role.Student))
                             {
 
                                 @ButtonDrop("Студент", new List<MvcHtmlString> {
-                                    @Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null),
-                                    @Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)
-                                }, "");
+                                                                    @Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null),
+                                                                    @Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)
+                                                                }, "");
                             }
 
-                            @if (User.IsInRole("Teacher"))
+                            @if (User.IsInRole(Role.Teacher))
                             {
 
                                 @ButtonDrop("Учитель", new List<MvcHtmlString> {
-                                    @Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null),
-                                    @Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)
-                                }, "");
+                                                                    @Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null),
+                                                                    @Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)
+                                                                }, "");
                             }
                             <li>@Html.ActionLink("Контакты", "Contact", "Home", new { Area = "" }, null)</li>
                             <li></li>
@@ -98,11 +103,12 @@
                                             <a href="@Url.Action("MailReceive", "Mail", new { Area = "" }, null)">
                                                 Входящие
                                                 <span class='badge' style='background-color:blue'>
-                                                   @if (Cache.Get(User.Identity.Name.ToLower()) != null)
-                                                   {
-                                                       @Cache.Get(User.Identity.Name.ToLower()).ToString();
-                                                   }
-                                                   else { <span>0</span> }
+                                                    @if (Cache.Get(User.Identity.Name.ToLower()) != null)
+                                                    {
+                                                        @Cache.Get(User.Identity.Name.ToLower()).ToString();
+                                                    }
+                                                    else
+                                                    { <span>0</span>}
                                                 </span>
                                             </a>
                                         </li>

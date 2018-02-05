@@ -7,25 +7,27 @@ using System.Web.Mvc;
 
 namespace Elective
 {
+    /// <summary>
+    /// Home controller
+    /// </summary>
     [ErrorExeptionFilter]
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Display general info
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
+        /// <summary>
+        /// Display contact info
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

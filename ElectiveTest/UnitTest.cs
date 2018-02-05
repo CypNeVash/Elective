@@ -352,6 +352,20 @@ namespace ElectiveTest
         }
 
         [Test]
+        public void TestLogRepository()
+        {
+            RestoreDate();
+
+            var logRepository = DependencyResolver.Current.GetService<IDefaultRepository<Log>>();
+
+            logRepository.Add(new Log("asdasd", "asdasd", LogStatus.error, "asda", "sad"));
+
+            Assert.AreEqual(logRepository.Get().Count(), _logs.Count());
+
+            Assert.AreEqual(logRepository.Get(_logs[0].Id).Id, _logs[0].Id);
+        }
+
+        [Test]
         public void TestMessageRepository()
         {
             RestoreDate();
@@ -536,14 +550,15 @@ namespace ElectiveTest
 
             accountService.DeleteAdmin(user);
 
-            
+            Assert.AreEqual(_accounts.Where(s => s.Identity.Id == user.Id).Count(),0);
 
-            accountService.DeleteStudent(_students[0].Identity);
-            accountService.DeleteTeacher(_teachers[0].Identity);
+            accountService.DeleteStudent(student);
 
+            Assert.AreEqual(_students.Where(s => s.Identity.Id == student.Id).Count(), 0);
 
+            accountService.DeleteTeacher(teacher);
 
-
+            Assert.AreEqual(_accounts.Where(s => s.Identity.Id == teacher.Id).Count(), 0);
         }
 
         [Test]

@@ -11,7 +11,7 @@ namespace Elective
         {
             var Url = new UrlHelper(filterContext.RequestContext);
 
-            var url = Url.Action("Index", "Message",new { message = "Something went wrong", type = "Error" });
+            var url = Url.Action("Index", "Message", new { message = "Something went wrong", type = "Error" });
 
             DependencyResolver.Current.GetService<IDefaultRepository<Log>>().Add(
                 new Log(filterContext.RouteData.Values["controller"] as String

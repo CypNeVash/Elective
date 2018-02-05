@@ -1,8 +1,5 @@
 ﻿using BusinessModel;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using System;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Elective
@@ -11,7 +8,7 @@ namespace Elective
     /// Controller for displaying select facultative
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Student")]
+    [Authorize(Roles = Role.Student)]
     public class StudentFacultativeController : Controller
     {
         private readonly IStudentService _studentService;

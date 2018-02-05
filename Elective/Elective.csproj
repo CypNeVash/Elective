@@ -196,6 +196,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountManagerController.cs" />
     <Compile Include="Areas\Admin\Controllers\EditAccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LogsController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisterTeacherController.cs" />
     <Compile Include="Areas\Admin\Models\ChangeAccountDataViewModel.cs" />
     <Compile Include="Areas\Student\Controllers\StudentFacultativeController.cs" />
@@ -229,6 +230,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="StringResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringResource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -261,6 +267,7 @@
     <Content Include="Areas\Teacher\Views\AddLog\Index.cshtml" />
     <Content Include="Areas\Student\Views\StudentFacultative\Index.cshtml" />
     <Content Include="Areas\Teacher\Views\TeacherFacultative\WhatchLog.cshtml" />
+    <Content Include="Areas\Admin\Views\Logs\Index.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -329,6 +336,12 @@
       <Project>{6b0a5b19-cd93-4fa0-9cf6-c14eb170dbbd}</Project>
       <Name>BusinessModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StringResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

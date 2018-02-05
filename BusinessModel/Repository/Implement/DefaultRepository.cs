@@ -20,10 +20,6 @@ namespace BusinessModel
             _electiveContext = electiveContext;
         }
 
-        public DefaultRepository()
-        {
-        }
-
         /// <summary>
         /// Method for getting all entities
         /// </summary>

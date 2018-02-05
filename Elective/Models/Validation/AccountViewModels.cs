@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Elective
@@ -25,7 +24,7 @@ namespace Elective
     public class RegisterViewModel
     {
         [Required]
-        [Range(5,80, ErrorMessage = "Значение {0} должно быть больше чеме {1}."),]
+        [Range(5, 80, ErrorMessage = "Значение {0} должно быть больше чеме {1}."),]
         public int Age { get; set; }
 
         [Required]

@@ -1,13 +1,10 @@
-﻿
-@{
-    ViewBag.Title = "MailSend";
+﻿@{
+    ViewBag.Title = StringResource.MailSend;
 }
-
-
 
 <div class="col-md-7 col-md-offset-2 person-color">
 
-    <h2 class="text-center">Новое сообщение</h2>
+    <h2 class="text-center">@StringResource.NewMessage</h2>
 
     @model MailViewModel
 
@@ -22,10 +19,10 @@
         <p>@Html.ValidationMessageFor(m => m.Theme, "")</p>
 
         <p> @Html.LabelFor(m => m.Message)</p>
-        <p> @Html.TextAreaFor(m => m.Message,10,10, new { @class = "form-control", @placeholder = "Message" })</p>
+        <p> @Html.TextAreaFor(m => m.Message, 10, 10, new { @class = "form-control", @placeholder = "Message" })</p>
         <p>@Html.ValidationMessageFor(m => m.Message, "")</p>
 
-        <button type="submit" class="btn btn-success" name="button" value="Change">Отправить</button>
+        <button type="submit" class="btn btn-success" name="button" value="Change">@StringResource.Send</button>
 
         <br />
         <br />

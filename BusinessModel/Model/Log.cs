@@ -13,13 +13,13 @@ namespace BusinessModel
         {
         }
 
-        public Log(string controller, string action, LogStatus status, string message, string userName)
+        public Log(string controller, string action, LogStatus status, string message, string name)
         {
             Controller = controller;
             Action = action;
             Status = status;
             Message = message;
-            UserName = userName;
+            Name = name;
         }
 
         public string Controller { get; set; }
@@ -32,6 +32,6 @@ namespace BusinessModel
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public string UserName { get; set; }
+        public string Name { get; set; }
     }
 }

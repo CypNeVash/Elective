@@ -1,8 +1,5 @@
 ﻿using BusinessModel;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Elective
@@ -11,7 +8,7 @@ namespace Elective
     /// Controller for displaying all register facultatives
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Student")]
+    [Authorize(Roles = Role.Student)]
     public class StudentFacultativesController : Controller
     {
         private readonly IAccountService _accountService;
@@ -33,7 +30,7 @@ namespace Elective
             Account account = _accountService.GetAccount(User.Identity.Name);
             Student student = _studentService.GetStudent(account);
 
-            return View(student.RegistrFacultatives.OrderBy(s=>s.Status));
+            return View(student.RegistrFacultatives.OrderBy(s => s.Status));
         }
     }
 }

@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Web.Mvc;
+using BusinessModel;
+using System;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Elective
 {
@@ -9,7 +13,7 @@ namespace Elective
     /// all users in database
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Role.Admin)]
     public class AccountManagerController : Controller
     {
         public ApplicationUserManager UserManager

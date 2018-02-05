@@ -1,10 +1,5 @@
 ﻿using BusinessModel;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Elective
@@ -13,7 +8,7 @@ namespace Elective
     /// Controller for viewing all facultatives and register to them
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Student")]
+    [Authorize(Roles = Role.Student)]
     public class StudentManagerController : Controller
     {
         private readonly IAccountService _accountService;
@@ -43,7 +38,7 @@ namespace Elective
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult RegisterFacultative(Guid id)
         {
-           Account account = _accountService.GetAccount(User.Identity.Name);
+            Account account = _accountService.GetAccount(User.Identity.Name);
 
             Student student = _studentService.GetStudent(account);
             if (_studentService.RegToFacultative(student, id))

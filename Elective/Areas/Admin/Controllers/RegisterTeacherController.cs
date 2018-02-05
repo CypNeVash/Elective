@@ -12,7 +12,7 @@ namespace Elective
     /// by admin
     /// </summary>
     [ErrorExeptionFilter]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Role.Admin)]
     public class RegisterTeacherController : Controller
     {
         private readonly IAccountService _accountService;
@@ -53,7 +53,7 @@ namespace Elective
                 if (result.Succeeded)
                 {
                     _accountService.CreateTeacher(user,model.FirstName,model.SecondName,model.Age,model.BirthDate);
-                    UserManager.AddToRole(user.Id, "Teacher");
+                    UserManager.AddToRole(user.Id, Role.Teacher);
 
                     return RedirectToAction("Index", "AccountManager");
                 }

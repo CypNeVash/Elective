@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Elective
-{ 
+{
     public class PersonViewModel
     {
         [Required]

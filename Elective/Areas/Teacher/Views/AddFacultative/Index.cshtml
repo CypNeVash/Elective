@@ -1,10 +1,10 @@
 ﻿@model FacultativeViewModel
 @using BusinessModel
 @{
-    ViewBag.Title = "faculty";
+    ViewBag.Title = "Создать факультатив";
 }
 <div class="col-md-7 col-md-offset-2 fon-color">
-    <h2 class="text-center">Создать факультатив</h2>
+    <h2 class="text-center">@ViewBag.Title</h2>
     <hr />
     @using (Html.BeginForm("Index", "AddFacultative", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {

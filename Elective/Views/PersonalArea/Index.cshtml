@@ -16,16 +16,16 @@
             <img src="~/Content/img_avatar1.png" class="media-object" style="width : 80%">
         </div>
         <div class="media-body" style=" position:absolute;">
-            <p>Имя: @Model.FirstName</p>
-            <p>Фамилия: @Model.SecondName</p>
-            <p>Возраст: @Model.Age</p>
-            <p>День рождения: @Model.BirthDate.ToShortDateString()</p>
+            <p>@StringResource.UserName: @Model.FirstName</p>
+            <p>@StringResource.UserSecondName: @Model.SecondName</p>
+            <p>@StringResource.UserAge: @Model.Age</p>
+            <p>@StringResource.Birthday: @Model.BirthDate.ToShortDateString()</p>
         </div>
     </div>
     <br />
     <br />
     <br />
     <p class=" text-right">
-        @Html.ActionLink("Редактировать", "Edit", "PersonalArea", null, new { @class = "btn btn-success" })
+        @Html.ActionLink(StringResource.Edit, "Edit", "PersonalArea", null, new { @class = "btn btn-success" })
     </p>
 </div>

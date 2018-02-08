@@ -9,8 +9,8 @@ namespace Elective
     public class ReportViewModel
     {
         [Required]
-        [Range(0,100, ErrorMessage = "Значение range 0-100")]
-        [Display(Name = "Name")]
+        [Range(0,100, ErrorMessageResourceName = "RangeMarkValid", ErrorMessageResourceType = typeof(StringResource))]
+        [Display(Name = "Mark", ResourceType = typeof(StringResource))]
         public int Mark { get; set; }
 
         [Required]

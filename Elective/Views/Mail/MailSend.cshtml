@@ -11,15 +11,15 @@
     @using (Html.BeginForm("Send", "Mail", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         <p> @Html.LabelFor(m => m.Login)</p>
-        <p> @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = "Login" })</p>
+        <p> @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = StringResource.UserLogin })</p>
         <p>@Html.ValidationMessageFor(m => m.Login, "")</p>
 
         <p> @Html.LabelFor(m => m.Theme)</p>
-        <p> @Html.TextBoxFor(m => m.Theme, new { @class = "form-control", @placeholder = "Theme" })</p>
+        <p> @Html.TextBoxFor(m => m.Theme, new { @class = "form-control", @placeholder = StringResource.Theme })</p>
         <p>@Html.ValidationMessageFor(m => m.Theme, "")</p>
 
         <p> @Html.LabelFor(m => m.Message)</p>
-        <p> @Html.TextAreaFor(m => m.Message, 10, 10, new { @class = "form-control", @placeholder = "Message" })</p>
+        <p> @Html.TextAreaFor(m => m.Message, 10, 10, new { @class = "form-control", @placeholder = StringResource.Message })</p>
         <p>@Html.ValidationMessageFor(m => m.Message, "")</p>
 
         <button type="submit" class="btn btn-success" name="button" value="Change">@StringResource.Send</button>

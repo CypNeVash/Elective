@@ -47,36 +47,36 @@
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Главная", "Index", "Home", new { Area = "" }, null)</li>
+                            <li>@Html.ActionLink(StringResource.Main, "Index", "Home", new { Area = "" }, null)</li>
 
                             @if (User.IsInRole(Role.Admin))
                             {
 
-                                @ButtonDrop("Админ", new List<MvcHtmlString> {
-                                                                    @Html.ActionLink("Все пользователи", "Index", "AccountManager", new { Area = "Admin" }, null),
-                                                                    @Html.ActionLink("Рег. учителя", "Index", "RegisterTeacher", new { Area = "Admin" }, null),
-                                                                    @Html.ActionLink("Журнал", "Index", "Logs", new { Area = "Admin" }, null)
-                                                                }, "");
+                                @ButtonDrop(StringResource.Admin, new List<MvcHtmlString> {
+                                @Html.ActionLink(StringResource.AllUsers, "Index", "AccountManager", new { Area = "Admin" }, null),
+                                @Html.ActionLink(StringResource.RegTeacher, "Index", "RegisterTeacher", new { Area = "Admin" }, null),
+                                @Html.ActionLink(StringResource.Log, "Index", "Logs", new { Area = "Admin" }, null)
+                                }, "");
                             }
 
                             @if (User.IsInRole(Role.Student))
                             {
 
-                                @ButtonDrop("Студент", new List<MvcHtmlString> {
-                                                                    @Html.ActionLink("Все факультативы", "Index", "StudentManager", new { Area = "Student" }, null),
-                                                                    @Html.ActionLink("Мои факультативы", "Index", "StudentFacultatives", new { Area = "Student" }, null)
-                                                                }, "");
+                                @ButtonDrop(StringResource.Student, new List<MvcHtmlString> {
+                                @Html.ActionLink(StringResource.AllElective, "Index", "StudentManager", new { Area = "Student" }, null),
+                                @Html.ActionLink(StringResource.MyElective, "Index", "StudentFacultatives", new { Area = "Student" }, null)
+                                }, "");
                             }
 
                             @if (User.IsInRole(Role.Teacher))
                             {
 
-                                @ButtonDrop("Учитель", new List<MvcHtmlString> {
-                                                                    @Html.ActionLink("Мои факультативы", "Index", "TeacherFacultative", new { Area = "Teacher" }, null),
-                                                                    @Html.ActionLink("Создать факультатив", "Index", "AddFacultative", new { Area = "Teacher" }, null)
-                                                                }, "");
+                                @ButtonDrop(StringResource.Teacher, new List<MvcHtmlString> {
+                                @Html.ActionLink(StringResource.MyElective, "Index", "TeacherFacultative", new { Area = "Teacher" }, null),
+                                @Html.ActionLink(StringResource.CreateElective, "Index", "AddFacultative", new { Area = "Teacher" }, null)
+                                }, "");
                             }
-                            <li>@Html.ActionLink("Контакты", "Contact", "Home", new { Area = "" }, null)</li>
+                            <li>@Html.ActionLink(StringResource.Contact, "Contact", "Home", new { Area = "" }, null)</li>
                             <li></li>
                             <li></li>
                             <li></li>
@@ -92,16 +92,18 @@
                             else
                             {
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name.Insert(0, " ") <span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" 
+                                       role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name.Insert(0, " ") 
+                                    <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Профиль", "Index", "PersonalArea", new { Area = "" }, null)</li>
+                                        <li>@Html.ActionLink(StringResource.Profile, "Index", "PersonalArea", new { Area = "" }, null)</li>
                                         <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Написать", "MailSend", "Mail", new { Area = "" }, null)</li>
+                                        <li>@Html.ActionLink(StringResource.WriteMessage, "MailSend", "Mail", new { Area = "" }, null)</li>
                                         <li role="separator" class="divider"></li>
                                         <li>
                                             <a href="@Url.Action("MailReceive", "Mail", new { Area = "" }, null)">
-                                                Входящие
+                                                @StringResource.MessageReceive
                                                 <span class='badge' style='background-color:blue'>
                                                     @if (Cache.Get(User.Identity.Name.ToLower()) != null)
                                                     {
@@ -113,10 +115,10 @@
                                             </a>
                                         </li>
                                         <li role="separator" class="divider"></li>
-                                        <li>@Html.ActionLink("Отправленные", "MailSendOut", "Mail", new { Area = "" }, null)</li>
+                                        <li>@Html.ActionLink(StringResource.MessageSend, "MailSendOut", "Mail", new { Area = "" }, null)</li>
                                     </ul>
                                 </li>
-                                <li>@Html.ActionLink(" Выйти", "LogOff", "Account", new { Area = "" }, new { @class = "glyphicon glyphicon-log-out" })</li>
+                                <li>@Html.ActionLink(StringResource.SignOut, "LogOff", "Account", new { Area = "" }, new { @class = "glyphicon glyphicon-log-out" })</li>
                             }
                         </ul>
                     </div>

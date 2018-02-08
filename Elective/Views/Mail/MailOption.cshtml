@@ -8,8 +8,8 @@
 
 <div class="facultative-color facultative-label text-balck">
     <h2 class="text-center">@Model.Theme</h2>
-    <p>Кто: @Model.From.FullName</p>
-    <p>Кому: @Model.To.FullName</p>
-    <p>Дата: @Model.SendDate</p>
-    <p>Сообщение: @Model.Text</p>
+    <p>@StringResource.MessWhoSend: @Model.From.FullName</p>
+    <p>@StringResource.MessWhoReceive: @Model.To.FullName</p>
+    <p>@StringResource.Date: @Model.SendDate</p>
+    <p>@StringResource.NewMessage: @Model.Text</p>
 </div>

@@ -14,31 +14,31 @@
         <p>@Html.ValidationSummary("")</p>
         <p>
             @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = StringResource.UserEmail })
         </p>
         <p>@Html.ValidationMessageFor(m => m.Email, "")</p>
 
         <p>
             @Html.LabelFor(m => m.Login)
-            @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = "Login" })
+            @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = StringResource.UserLogin })
         </p>
         <p>@Html.ValidationMessageFor(m => m.Login, "")</p>
 
         <p>
             @Html.LabelFor(m => m.FirstName)
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "FirstName" })
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = StringResource.UserName })
         </p>
         <p>@Html.ValidationMessageFor(m => m.FirstName, "")</p>
 
         <p>
             @Html.LabelFor(m => m.SecondName)
-            @Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = "SecondName" })
+            @Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = StringResource.UserSecondName })
         </p>
         <p>@Html.ValidationMessageFor(m => m.SecondName, "")</p>
 
         <p>
             @Html.LabelFor(m => m.Age)
-            @Html.EditorFor(m => m.Age)
+            @Html.EditorFor(m => m.Age, new { @class = "form-control", @placeholder = StringResource.UserAge })
         </p>
         <p>@Html.ValidationMessageFor(m => m.Age, "")</p>
 
@@ -50,13 +50,13 @@
 
         <p>
             @Html.LabelFor(m => m.Password)
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = StringResource.Password })
         </p>
         <p>@Html.ValidationMessageFor(m => m.Password, "")</p>
 
         <p>
             @Html.LabelFor(m => m.ConfirmPassword)
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "ConfirmPassword" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = StringResource.ConfirmPassword })
         </p>
         <p>@Html.ValidationMessageFor(m => m.ConfirmPassword, "")</p>
 

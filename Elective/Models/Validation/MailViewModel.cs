@@ -5,15 +5,15 @@ namespace Elective
     public class MailViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]
-        [Display(Name = "Login пользователя")]
+        [StringLength(100, ErrorMessageResourceName = "StringLengthValid", ErrorMessageResourceType = typeof(StringResource), MinimumLength = 6)]
+        [Display(Name = "Login", ResourceType = typeof(StringResource))]
         public string Login { get; set; }
 
-        [Display(Name = "Theme")]
+        [Display(Name = "Theme", ResourceType = typeof(StringResource))]
         public string Theme { get; set; }
 
         [Required]
-        [Display(Name = "Message")]
+        [Display(Name = "Message", ResourceType = typeof(StringResource))]
         public string Message { get; set; }
     }
 }

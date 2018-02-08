@@ -47,7 +47,6 @@ namespace Elective
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -91,7 +90,6 @@ namespace Elective
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)

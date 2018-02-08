@@ -58,6 +58,7 @@ namespace BusinessModel
             UserManager.AddToRole(user.Id, Role.Teacher);
 
             _context.Facultatives.Add(new Facultative("Syp", "Nep", "lalaala", FacultativeStatus.Registration, new Teacher(user, "bbbbbbb", "bbbbbbbb", 70, DateTime.Now), System.DateTime.Now, 40));
+            
 
             _context.SaveChanges();
         }

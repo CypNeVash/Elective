@@ -207,7 +207,7 @@
     <Compile Include="Areas\Teacher\Controllers\AddLogController.cs" />
     <Compile Include="Areas\Teacher\Controllers\EditFacultativeController.cs" />
     <Compile Include="Areas\Teacher\Controllers\TeacherFacultativeController.cs" />
-    <Compile Include="Areas\Teacher\Models\CourseViewModel.cs" />
+    <Compile Include="Areas\Teacher\Models\FacultativeViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\ReportBookViewModel.cs" />
     <Compile Include="Areas\Teacher\Models\ReportViewModel.cs" />
     <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
@@ -255,7 +255,6 @@
     <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Teacher\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\AccountManager\Index.cshtml" />
     <Content Include="Areas\Admin\Views\RegisterTeacher\Index.cshtml" />
     <Content Include="Areas\Admin\Views\EditAccount\Index.cshtml" />
@@ -314,6 +313,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Teacher\Views\Shared\" />

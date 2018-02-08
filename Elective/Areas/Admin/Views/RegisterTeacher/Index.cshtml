@@ -1,28 +1,27 @@
 ﻿@model RegisterViewModel
 @{
-    ViewBag.Title = "Регистрация уччителя";
+    ViewBag.Title = StringResource.RegTeacher;
 }
 <div class="col-md-7 col-md-offset-2 fon-color">
     @using (Html.BeginForm("Index", "RegisterTeacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
-        @Html.AntiForgeryToken()
-        <h3 class="text-center">Создайте новую учетную запись для учителя.</h3>
+        <h3 class="text-center">@StringResource.RegisterNewAccount</h3>
         <hr />
 
         <p>@Html.LabelFor(m => m.Email)</p>
-        <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })</p>
+        <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = StringResource.UserEmail })</p>
         <p>@Html.ValidationMessageFor(m => m.Email, "")</p>
 
         <p>@Html.LabelFor(m => m.Login)</p>
-        <p>@Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = "Login" })</p>
+        <p>@Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = StringResource.UserLogin })</p>
         <p>@Html.ValidationMessageFor(m => m.Login, "")</p>
 
         <p>@Html.LabelFor(m => m.FirstName)</p>
-        <p>@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "FirstName" })</p>
+        <p>@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = StringResource.UserName })</p>
         <p>@Html.ValidationMessageFor(m => m.FirstName, "")</p>
 
         <p>@Html.LabelFor(m => m.SecondName)</p>
-        <p>@Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = "SecondName" })</p>
+        <p>@Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = StringResource.UserSecondName })</p>
         <p>@Html.ValidationMessageFor(m => m.SecondName, "")</p>
 
         <p>@Html.LabelFor(m => m.Age)</p>
@@ -34,14 +33,14 @@
         <p>@Html.ValidationMessageFor(m => m.BirthDate, "")</p>
 
         <p> @Html.LabelFor(m => m.Password)</p>
-        <p> @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })</p>
+        <p> @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = StringResource.Password })</p>
         <p>@Html.ValidationMessageFor(m => m.Password, "")</p>
 
         <p>@Html.LabelFor(m => m.ConfirmPassword)</p>
-        <p>@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "ConfirmPassword" })</p>
+        <p>@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = StringResource.ConfirmPassword })</p>
         <p>@Html.ValidationMessageFor(m => m.ConfirmPassword, "")</p>
 
-        <input type="submit" value="Регистрация" class="btn btn-success text-right" />
+        <input type="submit" value=@StringResource.Registration class="btn btn-success text-right" />
 
         <br />
         <br />

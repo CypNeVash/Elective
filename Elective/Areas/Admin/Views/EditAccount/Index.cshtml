@@ -1,26 +1,28 @@
 ﻿@{Html.EnableClientValidation(false);}
+
 @{
-    ViewBag.Title = "Изменить данные";
+    ViewBag.Title = StringResource.Edit;
 }
 
 @model ChangeAccountDataViewModel
+
 <div class="col-md-7 col-md-offset-2 fon-color">
     @using (Html.BeginForm("Index", "EditAccount", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4 class="text-center">Редактировать учетную запись.</h4>
+        <h4 class="text-center">@StringResource.EditAccount</h4>
         <hr />
         <p>@Html.LabelFor(m => m.Email)</p>
-        <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })</p>
+        <p>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = StringResource.UserEmail })</p>
 
         <p>@Html.LabelFor(m => m.Login)</p>
-        <p>@Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = "Login" })</p>
+        <p>@Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = StringResource.UserLogin })</p>
 
         <p>@Html.LabelFor(m => m.FirstName)</p>
-        <p>@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "FirstName" })</p>
+        <p>@Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = StringResource.UserName })</p>
 
         <p>@Html.LabelFor(m => m.SecondName)</p>
-        <p>@Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = "SecondName" })</p>
+        <p>@Html.TextBoxFor(m => m.SecondName, new { @class = "form-control", @placeholder = StringResource.UserSecondName })</p>
 
         <p>@Html.LabelFor(m => m.Age)</p>
         <p>@Html.EditorFor(m => m.Age)</p>
@@ -29,19 +31,19 @@
         <p>@Html.TextBoxFor(m => m.BirthDate, new { @placeholder = DateTime.Now.ToString("yyyy/MM/dd") })</p>
 
         <p> @Html.LabelFor(m => m.OldPassword)</p>
-        <p> @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control", @placeholder = "OldPassword" })</p>
+        <p> @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control", @placeholder = StringResource.OldPassword })</p>
 
         <p> @Html.LabelFor(m => m.NewPassword)</p>
-        <p> @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @placeholder = "NewPassword" })</p>
+        <p> @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @placeholder = StringResource.NewPassword })</p>
 
         <p>@Html.LabelFor(m => m.ConfirmPassword)</p>
-        <p>@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "ConfirmPassword" })</p>
+        <p>@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = StringResource.ConfirmPassword })</p>
 
         <div class="btn-group">
-            <button type="submit" class="btn btn-primary" name="button" value="Change data">Change data</button>
-            <button type="submit" class="btn btn-primary" name="button" value="Delete">Delete</button>
-            <button type="submit" class="btn btn-primary" name="button" value="Ban">Ban</button>
-            <button type="submit" class="btn btn-primary" name="button" value="Restore">Restore</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Change data">@StringResource.ChangeDate</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Delete">@StringResource.Delete</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Ban">@StringResource.Ban</button>
+            <button type="submit" class="btn btn-primary" name="button" value="Restore">@StringResource.Restore</button>
         </div>
 
         <br />

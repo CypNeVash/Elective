@@ -9,11 +9,11 @@
     @using (Html.BeginForm("Index", "AddFacultative", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         <p> @Html.LabelFor(m => m.Name)</p>
-        <p> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Name" })</p>
+        <p> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = StringResource.FacultativeName })</p>
         <p>@Html.ValidationMessageFor(m => m.Name, "")</p>
 
         <p>@Html.LabelFor(m => m.Theme)</p>
-        <p>@Html.TextBoxFor(m => m.Theme, new { @class = "form-control", @placeholder = "Theme" })</p>
+        <p>@Html.TextBoxFor(m => m.Theme, new { @class = "form-control", @placeholder = StringResource.Theme })</p>
         <p>@Html.ValidationMessageFor(m => m.Theme, "")</p>
 
         <p>@Html.LabelFor(m => m.Duration)</p>
@@ -21,7 +21,7 @@
         <p>@Html.ValidationMessageFor(m => m.Duration, "")</p>
 
         <p>@Html.LabelFor(m => m.Description)</p>
-        <p>@Html.TextBoxFor(m => m.Description, new { @class = "form-control", @placeholder = "Description" })</p>
+        <p>@Html.TextBoxFor(m => m.Description, new { @class = "form-control", @placeholder = StringResource.Description})</p>
         <p>@Html.ValidationMessageFor(m => m.Description, "")</p>
 
         <p>@Html.LabelFor(m => m.StartFacultative)</p>
@@ -34,7 +34,7 @@
         <p>@Html.RadioButtonFor(m => m.Status, FacultativeStatus.NotAvailable) @FacultativeStatus.NotAvailable.ToString()</p>
         <p>@Html.RadioButtonFor(m => m.Status, FacultativeStatus.Finished) @FacultativeStatus.Finished.ToString()</p>
 
-        <input type="submit" value="Добавить" class="btn btn-success text-right" />
+        <input type="submit" value=@StringResource.Add class="btn btn-success text-right" />
 
         <br />
         <br />

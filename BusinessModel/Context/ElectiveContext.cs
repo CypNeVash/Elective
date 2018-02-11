@@ -24,6 +24,7 @@ namespace BusinessModel
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<ReportBook>().HasOptional(x => x.Elective).WithOptionalDependent(x => x.Log);
 
             modelBuilder.Entity<Message>().HasOptional(x => x.From).WithMany(s => s.MessageSend);

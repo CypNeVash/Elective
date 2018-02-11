@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
+    /// <summary>
+    /// Repository for manipulating with 
+    /// entity Messages in the database 
+    /// </summary>
     public class MessageRepository : DefaultRepository<Message>
     {
         public MessageRepository(ElectiveContext electiveContext) : base(electiveContext)

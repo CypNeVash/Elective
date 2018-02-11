@@ -9,6 +9,12 @@ namespace BusinessModel
     /// </summary>
     public class Log : BaseEntity
     {
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public LogStatus Status { get; set; }
+        public string Message { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string Name { get; set; }
         public Log()
         {
         }
@@ -21,17 +27,5 @@ namespace BusinessModel
             Message = message;
             Name = name;
         }
-
-        public string Controller { get; set; }
-
-        public string Action { get; set; }
-
-        public LogStatus Status { get; set; }
-
-        public string Message { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        public string Name { get; set; }
     }
 }

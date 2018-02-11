@@ -14,7 +14,6 @@ namespace Elective
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Подключите здесь службу электронной почты для отправки сообщения электронной почты.
             return Task.FromResult(0);
         }
     }
@@ -23,12 +22,10 @@ namespace Elective
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Подключите здесь службу SMS, чтобы отправить текстовое сообщение.
             return Task.FromResult(0);
         }
     }
 
-    // Настройка диспетчера пользователей приложения. UserManager определяется в ASP.NET Identity и используется приложением.
     public class ApplicationUserManager : UserManager<User>
     {
         public ApplicationUserManager(IUserStore<User> store)
@@ -39,14 +36,12 @@ namespace Elective
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
             var manager = new ApplicationUserManager(new UserStore<User>(context.Get<ElectiveContext>()));
-            // Настройка логики проверки имен пользователей
             manager.UserValidator = new UserValidator<User>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
-            // Настройка логики проверки паролей
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
@@ -56,13 +51,10 @@ namespace Elective
                 RequireUppercase = true,
             };
 
-            // Настройка параметров блокировки по умолчанию
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-            // Регистрация поставщиков двухфакторной проверки подлинности. Для получения кода проверки пользователя в данном приложении используется телефон и сообщения электронной почты
-            // Здесь можно указать собственный поставщик и подключить его.
             manager.RegisterTwoFactorProvider("Код, полученный по телефону", new PhoneNumberTokenProvider<User>
             {
                 MessageFormat = "Ваш код безопасности: {0}"
@@ -84,7 +76,6 @@ namespace Elective
         }
     }
 
-    // Настройка диспетчера входа для приложения.
     public class ApplicationSignInManager : SignInManager<User, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)

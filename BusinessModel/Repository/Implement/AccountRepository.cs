@@ -17,9 +17,9 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<Account> Get()
+        public override IEnumerable<Account> Get()
         {
-            return _electiveContext.Accounts.Include(s => s.Identity);
+            return _electiveContext.Accounts.Include(s => s.Identity).ToList();
         }
 
         public override Account Get(Guid id)

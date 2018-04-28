@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BusinessModel
@@ -9,7 +10,7 @@ namespace BusinessModel
     /// </summary>
     public interface IStudentService
     {
-        IQueryable<Facultative> GetAllFacultative();
+        IEnumerable<Facultative> GetAllFacultative();
 
         bool RegToFacultative(Student student, Guid id);
 

@@ -39,7 +39,7 @@ namespace BusinessModel
 
         public Account GetAllMessages(string identityName)
         {
-            return _accountRepository.Get().Where(s => s.Identity.UserName == identityName)
+            return _accountRepository.Get().AsQueryable().Where(s => s.Identity.UserName == identityName)
                 .Include(s => s.MessageSend)
                 .Include(s => s.MessagesReceive)
                 .Include(s => s.MessageSend.Select(i => i.To))

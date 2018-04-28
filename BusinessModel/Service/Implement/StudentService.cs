@@ -28,7 +28,7 @@ namespace BusinessModel
             _logRepository = logRepository;
         }
 
-        public IQueryable<Facultative> GetAllFacultative()
+        public IEnumerable<Facultative> GetAllFacultative()
         {
             return _facultativeRepository.Get();
         }

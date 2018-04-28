@@ -17,13 +17,13 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<Facultative> Get()
+        public override IEnumerable<Facultative> Get()
         {
            return  _electiveContext.Facultatives.Include(s => s.Lecturer)
                 .Include(s => s.Audience)
                 .Include(s => s.Log)
                 .Include(s => s.Log.Reports.Select(rep => rep.Listener))
-                .Include(s => s.Log.Elective);
+                .Include(s => s.Log.Elective).ToList();
         }
 
         public override Facultative Get(Guid id)

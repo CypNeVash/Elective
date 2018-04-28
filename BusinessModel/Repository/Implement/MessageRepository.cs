@@ -17,9 +17,9 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<Message> Get()
+        public override IEnumerable<Message> Get()
         {
-            return _electiveContext.Messages.Include(s => s.From).Include(s => s.To);
+            return _electiveContext.Messages.Include(s => s.From).Include(s => s.To).ToList();
         }
 
         public override Message Get(Guid id)

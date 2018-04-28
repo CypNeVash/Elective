@@ -16,9 +16,9 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<Log> Get()
+        public override IEnumerable<Log> Get()
         {
-            return _electiveContext.Logs;
+            return _electiveContext.Logs.ToList();
         }
 
         public override Log Get(Guid id)

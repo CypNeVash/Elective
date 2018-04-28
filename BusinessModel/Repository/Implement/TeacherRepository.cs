@@ -17,11 +17,11 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<Teacher> Get()
+        public override IEnumerable<Teacher> Get()
         {
             return _electiveContext.Teachers
                 .Include(s => s.MyFacultatives.Select(i => i.Lecturer))
-                .Include(s => s.MyFacultatives.Select(i => i.Audience));
+                .Include(s => s.MyFacultatives.Select(i => i.Audience)).ToList();
         }
 
         public override Teacher Get(Guid id)

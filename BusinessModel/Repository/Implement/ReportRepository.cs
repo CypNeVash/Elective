@@ -17,9 +17,9 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<Report> Get()
+        public override IEnumerable<Report> Get()
         {
-            return _electiveContext.Reports.Include(s=>s.Listener);
+            return _electiveContext.Reports.Include(s=>s.Listener).ToList();
         }
 
         public override Report Get(Guid id)

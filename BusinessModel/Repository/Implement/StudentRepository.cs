@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -14,10 +15,10 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<Student> Get()
+        public override IEnumerable<Student> Get()
         {
             return _electiveContext.Students
-                .Include(s => s.RegistrFacultatives);
+                .Include(s => s.RegistrFacultatives).ToList();
         }
 
         public override Student Get(Guid id)
@@ -38,8 +39,6 @@ namespace BusinessModel
 
             foreach (var item in data.MessagesReceive.ToList())
                 _electiveContext.Messages.Remove(item);
-
-            _electiveContext.Reports.RemoveRange( _electiveContext.Reports.Where(s => s.Listener.Id == data.Id));
 
             base.Remove(data);
         }

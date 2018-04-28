@@ -23,7 +23,7 @@ namespace BusinessModel
         /// <summary>
         /// Method for getting all entities
         /// </summary>
-        abstract public IQueryable<T> Get();
+        abstract public IEnumerable<T> Get();
 
         /// <summary>
         /// Method for getting 

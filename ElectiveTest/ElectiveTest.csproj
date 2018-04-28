@@ -122,11 +122,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FacultativeRepositoryTest.cs" />
+    <Compile Include="MessageRepositoryTest.cs" />
+    <Compile Include="LogRepositoryTest.cs" />
+    <Compile Include="ReportBookRepositoryTest.cs" />
+    <Compile Include="StudentRepositoryTest.cs" />
+    <Compile Include="ReportRepositoryTest.cs" />
+    <Compile Include="TeacherRepositoryTest.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="AccountRepositoryTest.cs" />
     <Compile Include="UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

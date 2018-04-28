@@ -9,7 +9,7 @@ namespace BusinessModel
     /// </summary>
     public interface IDefaultRepository<T>
     {
-        IQueryable<T> Get();
+        IEnumerable<T> Get();
 
         void Add(T data);
 

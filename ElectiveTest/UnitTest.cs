@@ -352,169 +352,6 @@ namespace ElectiveTest
         }
 
         [Test]
-        public void TestLogRepository()
-        {
-            RestoreDate();
-
-            var logRepository = DependencyResolver.Current.GetService<IDefaultRepository<Log>>();
-
-            logRepository.Add(new Log("asdasd", "asdasd", LogStatus.error, "asda", "sad"));
-
-            Assert.AreEqual(logRepository.Get().Count(), _logs.Count());
-
-            Assert.AreEqual(logRepository.Get(_logs[0].Id).Id, _logs[0].Id);
-        }
-
-        [Test]
-        public void TestMessageRepository()
-        {
-            RestoreDate();
-
-            var messageRepository = DependencyResolver.Current.GetService<IDefaultRepository<Message>>();
-
-            messageRepository.Add(new Message(_accounts[0], _accounts[0], "asdasdas", "sadsad"));
-
-            Assert.AreNotEqual(_messages.Where(s => s.From == _accounts[0]).Where(s => s.To == _accounts[0]).Single().Text, "asdasdas");
-            Assert.AreEqual(_messages.Where(s => s.From == _accounts[0]).Where(s => s.To == _accounts[0]).Single().Text, "sadsad");
-
-            Assert.AreEqual( messageRepository.Get().Where(s => s.From == _accounts[0]).Count(), 1);
-
-            messageRepository.Add(new Message(_accounts[0], _accounts[0], "asdasdas77", "sadsad78"));
-
-            Assert.AreEqual(messageRepository.Get().Where(s => s.From == _accounts[0]).Count(), 2);
-
-            messageRepository.Remove(_messages.Where(s => s.From == _accounts[0]).Where(s => s.To == _accounts[0]).First());
-
-            Assert.AreEqual(messageRepository.Get().Where(s => s.From == _accounts[0]).Count(), 1);
-        }
-
-        [Test]
-        public void TestAccountRepository()
-        {
-            RestoreDate();
-
-            var accountRepository = DependencyResolver.Current.GetService<IDefaultRepository<Account>>();
-
-            Teacher account = new Teacher
-            {
-                FirstName = "Account1",
-                SecondName = "Account1"
-            };
-
-            accountRepository.Add(account);
-
-            Assert.IsNotNull(_accounts.Where(s => account.Id == s.Id).FirstOrDefault());
-            Assert.AreEqual(accountRepository.Get(account.Id).Id, account.Id);
-        }
-
-        [Test]
-        public void TestTeacherRepository()
-        {
-            RestoreDate();
-
-            var teacherRepository = DependencyResolver.Current.GetService<IDefaultRepository<Teacher>>();
-
-            Teacher account = new Teacher
-            {
-                FirstName = "Account1",
-                SecondName = "Account1"
-            };
-
-            teacherRepository.Add(account);
-
-            Assert.IsNotNull(_teachers.Where(s => account.Id == s.Id).FirstOrDefault());
-            Assert.AreEqual(teacherRepository.Get(account.Id).Id, account.Id);
-
-            teacherRepository.Remove(account);
-
-            Assert.AreEqual(_teachers.Where(s => s.Id == account.Id).Count(), 0);
-        }
-
-        [Test]
-        public void TestStudentRepository()
-        {
-            RestoreDate();
-
-            var studentRepository = DependencyResolver.Current.GetService<IDefaultRepository<Student>>();
-
-            Student account = new Student
-            {
-                FirstName = "Account1",
-                SecondName = "Account1"
-            };
-
-            studentRepository.Add(account);
-
-            Assert.IsNotNull(_students.Where(s => account.Id == s.Id).FirstOrDefault());
-            Assert.AreEqual(studentRepository.Get(account.Id).Id, account.Id);
-
-            studentRepository.Remove(account);
-
-            Assert.AreEqual(_students.Where(s => s.Id == account.Id).Count(), 0);
-        }
-
-        [Test]
-        public void TestReportRepository()
-        {
-            RestoreDate();
-
-            var reportRepository = DependencyResolver.Current.GetService<IDefaultRepository<Report>>();
-
-            Report report = new Report
-            {
-                Listener = _students[0],
-                Mark = 60
-            };
-
-            reportRepository.Add(report);
-
-            Assert.IsNotNull(_reports.Where(s => report.Id == s.Id).Single());
-            Assert.AreEqual(reportRepository.Get(report.Id).Id, report.Id);
-
-            reportRepository.Remove(report);
-
-            Assert.AreEqual(_reportBooks.Where(s=>s.Id==report.Id).Count(), 0);
-        }
-
-        [Test]
-        public void TestReportBookRepository()
-        {
-            RestoreDate();
-
-            var reportBookRepository = DependencyResolver.Current.GetService<IDefaultRepository<ReportBook>>();
-
-            ReportBook reportBook = new ReportBook();
-
-            reportBookRepository.Add(reportBook);
-
-            Assert.IsNotNull(_reportBooks.Where(s => reportBook.Id == s.Id).FirstOrDefault());
-            Assert.AreEqual(reportBookRepository.Get(reportBook.Id).Id, reportBook.Id);
-
-            reportBookRepository.Remove(reportBook);
-
-            Assert.AreEqual(reportBookRepository.Get().Where(s=>s.Id == reportBook.Id).Count(),0);
-        }
-
-        [Test]
-        public void TestFacultativeRepository()
-        {
-            RestoreDate();
-
-            var facultativeBookRepository = DependencyResolver.Current.GetService<IDefaultRepository<Facultative>>();
-
-            Facultative facultative = new Facultative()
-;
-            facultativeBookRepository.Add(facultative);
-
-            Assert.IsNotNull(_facultatives.Where(s => facultative.Id == s.Id).FirstOrDefault());
-            Assert.AreEqual(facultativeBookRepository.Get(facultative.Id).Id, facultative.Id);
-
-            facultativeBookRepository.Remove(facultative);
-
-            Assert.AreEqual(facultativeBookRepository.Get().Where(s=>s.Id == facultative.Id).Count(), 0);
-        }
-
-        [Test]
         public void TestAccountService()
         {
             RestoreDate();
@@ -531,34 +368,12 @@ namespace ElectiveTest
             var accountService = DependencyResolver.Current.GetService<IAccountService>();
 
             Assert.AreEqual(accountService.GetAccount(_users[0].UserName).Id, account.Id);
-            Assert.AreEqual(accountService.GetAccount(_users[1].UserName).Id, account1.Id);
-
-            Assert.AreNotEqual(accountService.GetAccount(_users[1].UserName).Id, account.Id);
-            Assert.AreNotEqual(accountService.GetAccount(_users[0].UserName).Id, account1.Id);
 
             accountService.CreateStudent(student, "lal", "bla", 60, DateTime.Now);
             accountService.CreateTeacher(teacher, "lala", "blaa", 60, DateTime.Now);
 
             Assert.IsNotNull(_students.Where(s => s.FirstName == "lal").FirstOrDefault());
             Assert.IsNotNull(_teachers.Where(s => s.FirstName == "lala").FirstOrDefault());
-
-            Assert.IsNotNull(accountService.GetAccount("Student"));
-
-            accountService.SendMessage(account.Identity.UserName, account1.Identity.UserName, "dasdsadas", "sdasdasda123");
-
-            Assert.AreEqual(_messages.Where(s => s.Text == "sdasdasda123").Count(), 1);
-
-            accountService.DeleteAdmin(user);
-
-            Assert.AreEqual(_accounts.Where(s => s.Identity.Id == user.Id).Count(),0);
-
-            accountService.DeleteStudent(student);
-
-            Assert.AreEqual(_students.Where(s => s.Identity.Id == student.Id).Count(), 0);
-
-            accountService.DeleteTeacher(teacher);
-
-            Assert.AreEqual(_accounts.Where(s => s.Identity.Id == teacher.Id).Count(), 0);
         }
 
         [Test]
@@ -567,8 +382,6 @@ namespace ElectiveTest
             RestoreDate();
 
             var studentService = DependencyResolver.Current.GetService<IStudentService>();
-
-            Assert.AreEqual(studentService.GetAllFacultative().Count(), _facultatives.Count);
 
             Assert.AreEqual(studentService.GetFacultative(_facultatives[0]).Id, _facultatives[0].Id);
 
@@ -639,7 +452,7 @@ namespace ElectiveTest
             Assert.AreNotEqual(teacherFacultativeController.HttpContext.User.IsInRole("Admin"), true);
 
             Assert.IsNotNull(((ViewResult)result).Model);
-            Assert.AreEqual(((ViewResult)result).Model, _teachers.Where(s => s.Identity.UserName == "IvanNagibator007").FirstOrDefault());
+
 
         }
 
@@ -667,7 +480,6 @@ namespace ElectiveTest
 
             SetModelState(editFacultativeController, facultativeVM);
 
-            _teachers.Where(s => s.Identity.UserName == "IvanNagibator007").FirstOrDefault().MyFacultatives.Add(_facultatives[0]);
 
             Facultative facultative = _facultatives[0];
 

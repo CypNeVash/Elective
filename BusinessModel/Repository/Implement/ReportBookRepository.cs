@@ -17,12 +17,12 @@ namespace BusinessModel
         {
         }
 
-        public override IQueryable<ReportBook> Get()
+        public override IEnumerable<ReportBook> Get()
         {
             return _electiveContext.ReportBooks.Include(s=>s.Elective)
                 .Include(s=>s.Reports)
                 .Include(s=>s.Elective.Audience)
-                .Include(s =>s.Elective.Lecturer);
+                .Include(s =>s.Elective.Lecturer).ToList();
         }
 
         public override ReportBook Get(Guid id)
